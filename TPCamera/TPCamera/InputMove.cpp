@@ -7,7 +7,7 @@ int InputMove::Input()
         return DIR::AHEAD;
     }
     else if (CheckHitKey(KEY_INPUT_A))
-    {
+    { 
         return DIR::LEFT;
     }
     else if (CheckHitKey(KEY_INPUT_S))

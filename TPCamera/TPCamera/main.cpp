@@ -1,1 +1,1 @@
-#include"DxLib.h"
+#include<DxLib.h>
