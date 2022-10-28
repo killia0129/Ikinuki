@@ -139,11 +139,20 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="InputMove.cpp" />
     <ClCompile Include="main.cpp" />
+    <ClCompile Include="MapCell.cpp" />
+    <ClCompile Include="MapManager.cpp" />
+    <ClCompile Include="Move.cpp" />
     <ClCompile Include="Object.cpp" />
     <ClCompile Include="Player.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="game.h" />
+    <ClInclude Include="InputMove.h" />
+    <ClInclude Include="MapCell.h" />
+    <ClInclude Include="MapManager.h" />
+    <ClInclude Include="Move.h" />
     <ClInclude Include="Object.h" />
     <ClInclude Include="Player.h" />
   </ItemGroup>
