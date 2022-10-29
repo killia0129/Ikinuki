@@ -1,5 +1,6 @@
 #pragma once
-class Camera
+#include"Object.h"
+class Camera:public Object
 {
 };
 
