@@ -139,6 +139,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="Camera.cpp" />
     <ClCompile Include="InputMove.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="MapCell.cpp" />
@@ -149,6 +150,7 @@
     <ClCompile Include="Player.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="Camera.h" />
     <ClInclude Include="game.h" />
     <ClInclude Include="InputMove.h" />
     <ClInclude Include="MapCell.h" />
