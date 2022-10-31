@@ -9,6 +9,6 @@ public:
     virtual ~MapCell();
     void Draw();
 private:
-    int color;
+   
 };
 

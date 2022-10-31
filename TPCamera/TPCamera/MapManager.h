@@ -7,6 +7,8 @@ public:
     MapManager();
     virtual ~MapManager();
     void DrawAll();
+    void Update(float deltaTime);
+    void Generate();
 
 private:
     std::vector<MapCell*> mapCell;
