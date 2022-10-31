@@ -6,3 +6,7 @@ Camera::Camera()
     rad = 0.0f;
     yaw = -0.25f;
 }
+
+Camera::~Camera()
+{
+}
