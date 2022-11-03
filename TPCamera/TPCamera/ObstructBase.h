@@ -6,9 +6,13 @@ class ObstructBase :
 public:
     ObstructBase();
     virtual ~ObstructBase();
+    virtual void Update(float deltaTime) = 0;
 
 protected:
-    enum TYPE;//Ç±Ç±å„Ç≈èëÇ≠
+    enum TYPE
+    {
+        METEOR,BULLET
+    };
     int type;
 };
 

@@ -8,7 +8,7 @@ public:
     virtual ~Camera();
 private:
     VECTOR pos;
-    float rad;
+    float ang;
     float yaw;
 };
 
