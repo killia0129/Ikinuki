@@ -1,6 +1,6 @@
 #include "Move.h"
 
-VECTOR Move::MovePos(VECTOR pos, float speed, float rad)
+VECTOR Move::MovePos(VECTOR pos, float speed, float ang)
 {
-    return VGet(pos.x + speed * cos(rad * DX_PI), pos.y, pos.z + speed * sin(rad * DX_PI));
+    return VGet(pos.x + speed * cos(ang * DX_PI), pos.y, pos.z + speed * sin(ang * DX_PI));
 }

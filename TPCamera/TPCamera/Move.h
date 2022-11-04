@@ -3,5 +3,5 @@
 #include<iostream>
 class Move
 {
-    VECTOR MovePos(VECTOR pos, float speed, float rad);
+    VECTOR MovePos(VECTOR pos, float speed, float ang);
 };
