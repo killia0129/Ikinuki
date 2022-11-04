@@ -10,6 +10,7 @@ public:
     void Update(float deltaTime);
     void HPGetter();
     VECTOR posGetter();
+    void Draw();
 
 private:
     int HP;
