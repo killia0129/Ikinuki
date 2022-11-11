@@ -8,7 +8,5 @@ public:
 
 protected:
     VECTOR pos;
-    int objectName;
-    int modelHandle;
 };
 
