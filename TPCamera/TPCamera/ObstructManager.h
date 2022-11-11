@@ -20,5 +20,6 @@ private:
     static ObstructManager* instance;
     std::vector<ObstructBase*> obsBuff;
     std::vector<ObstructBase*> obstructs;
+    static float obstractCD;
 };
 

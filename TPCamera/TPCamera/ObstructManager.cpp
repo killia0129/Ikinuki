@@ -45,10 +45,20 @@ void ObstructManager::Remove(ObstructBase* dltObs)
 
 void ObstructManager::Draw()
 {
+    for (auto i : instance->obstructs)
+    {
+        i->Draw();
+    }
 }
 
 void ObstructManager::Finalize()
 {
+    Clear();
+    if (instance)
+    {
+        delete instance;
+        instance = nullptr;
+    }
 }
 
 void ObstructManager::Init()
