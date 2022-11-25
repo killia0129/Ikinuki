@@ -73,6 +73,13 @@ ObstructManager::ObstructManager()
     :obstructs()
 {
     instance = nullptr;
+    for (int i = 0; i < 4; i++)
+    {
+        for (int j = 0; j < 4; j++)
+        {
+            cell[i][j] = VGet(0.25f * (float)(i + 1), 0.25f * (float)(j + 1), 500.0f);
+        }
+    }
 }
 
 ObstructManager::~ObstructManager()

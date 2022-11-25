@@ -6,7 +6,7 @@ Meteor::Meteor(VECTOR _pos,bool _wave)
     pos = _pos;
     firstPosX = _pos.x;
     moveDis = 0.0f;
-    rad = 5.0f;
+    rad = 2.5f;
     yaw = 0.0f;
     ang = 0.0f;
     wave = 0.0f;

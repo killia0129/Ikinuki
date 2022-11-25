@@ -21,5 +21,7 @@ private:
     std::vector<ObstructBase*> obsBuff;
     std::vector<ObstructBase*> obstructs;
     static float obstractCD;
+
+    VECTOR cell[4][4];
 };
 

@@ -27,7 +27,7 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine
 
 	//デバッグ用
 	Stage* stage = new Stage;
-	Meteor* meteor = new Meteor(VGet(0, 0, 500), true);
+	Meteor* meteor = new Meteor(VGet(0, 0, 500), false);
 
 	while (!CheckHitKey(KEY_INPUT_ESCAPE))
 	{
