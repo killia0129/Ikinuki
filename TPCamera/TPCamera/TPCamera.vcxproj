@@ -144,6 +144,7 @@
     <ClCompile Include="main.cpp" />
     <ClCompile Include="Meteor.cpp" />
     <ClCompile Include="Move.cpp" />
+    <ClCompile Include="Needle.cpp" />
     <ClCompile Include="Object.cpp" />
     <ClCompile Include="ObstructManager.cpp" />
     <ClCompile Include="ObstructBase.cpp" />
@@ -156,6 +157,7 @@
     <ClInclude Include="InputMove.h" />
     <ClInclude Include="Meteor.h" />
     <ClInclude Include="Move.h" />
+    <ClInclude Include="Needle.h" />
     <ClInclude Include="Object.h" />
     <ClInclude Include="ObstructManager.h" />
     <ClInclude Include="ObstructBase.h" />

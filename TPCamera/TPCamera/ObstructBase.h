@@ -12,7 +12,7 @@ public:
 protected:
     enum TYPE
     {
-        METEOR,BULLET
+        METEOR,NEEDLE
     };
     int type;
 };
