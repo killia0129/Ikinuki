@@ -7,13 +7,25 @@ void Player::Update(float deltaTime)
 	switch (keyInput)
 	{
 	case DIR::AHEAD:
-		pos.y += 0.5f;
+		pos.y += playerSpeed;
 		break;
 
 	case DIR::BACK:
-		pos.y -= 0.5f;
+		pos.y -= playerSpeed;
+		break;
+
+	case DIR::LEFT:
+		pos.x -= playerSpeed;
+		break;
+
+	case DIR::RIGHT:
+		pos.x += playerSpeed;
+		break;
+
+	default:
 		break;
 	}
+
 }
 
 void Player::HPGetter()
@@ -24,6 +36,7 @@ VECTOR Player::posGetter()
 {
 	return VECTOR();
 }
+//1965
 
 void Player::Draw()
 {
