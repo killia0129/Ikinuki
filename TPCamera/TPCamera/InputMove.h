@@ -3,5 +3,6 @@
 #include"game.h"
 class InputMove
 {
-    int Input();
+public:
+	int Input();
 };

@@ -10,3 +10,4 @@ const float waveSpeed = 0.03f;
 const float obsSpeed = 10.0f;
 const float stageLength = 500.0f;
 const float stageWidth = 40.0f;
+const float playerSpeed = 0.5f;
