@@ -11,3 +11,5 @@ const float obsSpeed = 10.0f;
 const float stageLength = 500.0f;
 const float stageWidth = 40.0f;
 const float playerSpeed = 0.5f;
+const float playerSize = 6.0f;
+const float playerR = 1.5f;

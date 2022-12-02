@@ -7,6 +7,8 @@ class Player :
     public Object
 {
 public:
+    Player();
+    virtual ~Player();
     void Update(float deltaTime);
     void HPGetter();
     VECTOR posGetter();
