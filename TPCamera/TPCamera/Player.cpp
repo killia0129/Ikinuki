@@ -60,7 +60,7 @@ void Player::HPGetter()
 
 VECTOR Player::posGetter()
 {
-	return pos;
+	return Player::pos;
 }
 
 void Player::Draw()

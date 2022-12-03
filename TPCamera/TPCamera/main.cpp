@@ -3,6 +3,7 @@
 #include"Meteor.h"
 #include"Needle.h"
 #include"Player.h"
+#include"Aim.h"
 
 int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine, int nCmdShow)
 {
@@ -32,6 +33,8 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine
 	Meteor* meteor = new Meteor(VGet(0, 0, 500), true);
 	Needle* needle = new Needle(VGet(0, 0, 500));
 	Player* player = new Player();
+	Aim* aim = new Aim();
+
 
 
 	while (!CheckHitKey(KEY_INPUT_ESCAPE))
@@ -41,9 +44,11 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine
 		meteor->Update(0.16f);
 		needle->Update(0.16f);
 		player->Update(0.16f);
+		aim->Update(0.16f,player->posGetter());
 		stage->Draw();
 		meteor->Draw();
 		needle->Draw();
+		aim->Draw(false);
 		player->Draw();
 		DrawFormatString(10, 10, GetColor(255, 255, 255), "x=%f y=%f", player->posGetter().x, player->posGetter().y);
 		ScreenFlip();
