@@ -147,9 +147,9 @@
     <ClCompile Include="Move.cpp" />
     <ClCompile Include="Needle.cpp" />
     <ClCompile Include="Object.cpp" />
-    <ClCompile Include="ObstructManager.cpp" />
     <ClCompile Include="ObstructBase.cpp" />
     <ClCompile Include="Player.cpp" />
+    <ClCompile Include="PlayScene.cpp" />
     <ClCompile Include="SceneManager.cpp" />
     <ClCompile Include="Stage.cpp" />
   </ItemGroup>
@@ -162,9 +162,9 @@
     <ClInclude Include="Move.h" />
     <ClInclude Include="Needle.h" />
     <ClInclude Include="Object.h" />
-    <ClInclude Include="ObstructManager.h" />
     <ClInclude Include="ObstructBase.h" />
     <ClInclude Include="Player.h" />
+    <ClInclude Include="PlayScene.h" />
     <ClInclude Include="SceneManager.h" />
     <ClInclude Include="Stage.h" />
   </ItemGroup>

@@ -27,7 +27,7 @@ void Aim::Update(float deltaTime, VECTOR pPos)
 {
 	playerPos = pPos;
 	GetMousePoint(&mousePointX, &mousePointY);
-	SetMousePoint(1920 / 2, 1080 / 2);
+	//SetMousePoint(1920 / 2, 1080 / 2);
 	if (mousePointX > 1920 / 2 + mouseBuffer)
 	{
 		aimMark.x += aimSpeed * deltaTime;
@@ -53,6 +53,7 @@ void Aim::Update(float deltaTime, VECTOR pPos)
 	farSquare.y = (aimMark.y - playerPos.y) * farMarkRatio + playerPos.y;
 	lineLast.x = (aimMark.x - playerPos.x) * lastMarkRatio + playerPos.x;
 	lineLast.y = (aimMark.y - playerPos.y) * lastMarkRatio + playerPos.y;
+	SetMousePoint(1920 / 2, 1080 / 2);
 }
 
 void Aim::Draw(bool lockFlag)
