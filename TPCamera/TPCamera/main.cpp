@@ -30,12 +30,7 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine
 
 
 
-	while (!CheckHitKey(KEY_INPUT_ESCAPE))
-	{
-		
-		playScene->ALL();
-		
-	}
+	playScene->ALL();
 
 
 }
