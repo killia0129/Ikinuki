@@ -27,6 +27,7 @@ void Needle::Draw()
 {
     DrawCone3D(pos, VGet(pos.x, pos.y, pos.z + needleLong), needleWidth, 16, Color, Color, true);
     DrawCone3D(pos, VGet(pos.x, pos.y, pos.z + needleLong), needleWidth, 8, GetColor(0, 255, 0), GetColor(0,255,0), false);
+    DrawLine3D(pos, VGet(pos.x, -20.0f, pos.z), Color);
 }
 
 void Needle::ColorChanger()

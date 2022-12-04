@@ -76,6 +76,11 @@ void Aim::Draw(bool lockFlag)
 		color, false);
 	DrawCapsule3D(playerPos, lineLast, 0.1f, 4, lockedColor, lockedColor, true);
 	DrawSphere3D(aimMark, 1.0f, 16, lockedColor, lockedColor, true);
+	DrawLine3D(aimMark, VGet(aimMark.x, -20.0f, aimMark.z), lockedColor);
+	DrawLine3D( VGet(-20.0f, -20.0f, aimMark.z), VGet(20.0f, -20.0f, aimMark.z),lockedColor);
+	DrawLine3D(VGet(-20.0f, aimMark.y, aimMark.z), VGet(20.0f, aimMark.y, aimMark.z), lockedColor);
+	DrawLine3D(VGet(-20.0f, -20.0f, aimMark.z), VGet(-20.0f, 20.0f, aimMark.z), lockedColor);
+	DrawLine3D(VGet(20.0f, -20.0f, aimMark.z), VGet(20.0f, 20.0f, aimMark.z), lockedColor);
 
 	DrawFormatString(10, 30, GetColor(255, 255, 255),"X:%d,Y=%d",mousePointX,mousePointY);
 	DrawFormatString(10, 50, GetColor(255, 255, 255), "pX:%f", playerPos.x);

@@ -75,12 +75,12 @@ float PlayScene::ALL()
         {
             float obsZ = ptr->posGetter().z;
             float ratio = (obsZ - 3.0f) / (mark.z - 3.0f);
-            VECTOR markMoved =VGet((mark.x - player->posGetter().x) * ratio+player->posGetter().x,
-                (mark.y - player->posGetter().y) * ratio + player->posGetter().y,
-                obsZ);
-            float dis = (player->posGetter().x - markMoved.x) * (player->posGetter().x - markMoved.x) + (player->posGetter().y - markMoved.y) * (player->posGetter().y - markMoved.y);
+            float moveX = player->posGetter().x + ((mark.x - player->posGetter().x) * ratio);
+            float moveY = player->posGetter().y + ((mark.y - player->posGetter().y) * ratio);
+            VECTOR markMoved = VGet(moveX, moveY, ptr->posGetter().z);
+            float dis = (ptr->posGetter().x - markMoved.x) * (ptr->posGetter().x - markMoved.x) +  (ptr->posGetter().y - markMoved.y) * (ptr->posGetter().y - markMoved.y);
             dis = sqrtf(dis);
-            if (dis < 2.0f)
+            if (dis < 2.0f&&ptr->posGetter().z>10.0f)
             {
                 ptr->setDead(true);
                 deleteCount++;
@@ -113,7 +113,7 @@ float PlayScene::ALL()
             ptr->Draw();
         }
 
-        DrawFormatString(10, 100, GetColor(255, 255, 255), "size:%d", obstructs.size());
+        DrawFormatString(10, 100, GetColor(255, 255, 255), "COUNT : %d", deleteCount);
 
         if (deleteCount >= 10)
         {
