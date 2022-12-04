@@ -115,7 +115,7 @@ float PlayScene::ALL()
 
         DrawFormatString(10, 100, GetColor(255, 255, 255), "COUNT : %d", deleteCount);
 
-        if (deleteCount >= 10)
+        if (deleteCount >= 30)
         {
             return count;
         }

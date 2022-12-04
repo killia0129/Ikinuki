@@ -32,11 +32,20 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine
 
 	while (loop)
 	{
-		while (!CheckHitKey(KEY_INPUT_SPACE))
+		while (!CheckHitKey(KEY_INPUT_RETURN))
 		{
 			ClearDrawScreen();
-			DrawFormatString(900, 500, GetColor(255, 255, 255), "Press SPACE to Start");
+			DrawFormatString(900, 500, GetColor(255, 255, 255), "Press ENTER to Start");
+			if (CheckHitKey(KEY_INPUT_ESCAPE))
+			{
+				score = -2.0f;
+				break;
+			}
 			ScreenFlip();
+		}
+		if (score == -2.0f)
+		{
+			break;
 		}
 		PlayScene* playScene = new PlayScene();
 		score = playScene->ALL();
@@ -50,6 +59,11 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine
 			ClearDrawScreen();
 			DrawFormatString(900, 500, GetColor(255, 255, 255), "SCORE:%f", score);
 			DrawFormatString(900, 550, GetColor(255, 255, 255), "Press SPACE to ReTry");
+			if (CheckHitKey(KEY_INPUT_ESCAPE))
+			{
+				loop = false;
+				break;
+			}
 			ScreenFlip();
 		}
 		score = -1.0f;
