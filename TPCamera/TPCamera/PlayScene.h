@@ -11,7 +11,7 @@ class PlayScene
 public:
 	PlayScene();
 	virtual ~PlayScene();
-	void ALL();
+	float ALL();
 
 private:
 	Stage* stage = new Stage;
@@ -21,10 +21,12 @@ private:
 	int nowTime;
 	int previousTime;
 	void Entry();
+	void ObsDelete(ObstructBase* deleteObs);
 	VECTOR cell[4][4];
 	unsigned int seed;
 	float count;
 	float obsCool;
 	float deltaTime;
+	int deleteCount;
 };
 

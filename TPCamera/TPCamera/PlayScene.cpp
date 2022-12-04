@@ -15,23 +15,30 @@ PlayScene::PlayScene()
     count = 0.0f;
     obsCool = 0.0f;
     deltaTime = 0.0f;
+    deleteCount = 0;
 }
 
 PlayScene::~PlayScene()
 {
 }
 
-void PlayScene::ALL()
+float PlayScene::ALL()
 {
-    while (!CheckHitKey(KEY_INPUT_ESCAPE))
+    while (1)
     {
         ClearDrawScreen();
+
 
         nowTime = GetNowCount();
         deltaTime = (float)(nowTime - previousTime) / 1000.0f;
         count += deltaTime;
         obsCool += deltaTime;
+
+
         srand(seed);
+
+
+
         if (obsCool > 1.0f)
         {
             Entry();
@@ -45,8 +52,8 @@ void PlayScene::ALL()
         previousTime = nowTime;
 
 
-
-
+        
+        //Update
         for (auto ptr : obstructs)
         {
             ptr->Update(deltaTime);
@@ -62,6 +69,39 @@ void PlayScene::ALL()
             }
         }
 
+        //Hit
+        VECTOR mark = aim->MarkGetter();
+        for (auto ptr : obstructs)
+        {
+            float obsZ = ptr->posGetter().z;
+            float ratio = (obsZ - 3.0f) / (mark.z - 3.0f);
+            VECTOR markMoved =VGet((mark.x - player->posGetter().x) * ratio+player->posGetter().x,
+                (mark.y - player->posGetter().y) * ratio + player->posGetter().y,
+                obsZ);
+            float dis = (player->posGetter().x - markMoved.x) * (player->posGetter().x - markMoved.x) + (player->posGetter().y - markMoved.y) * (player->posGetter().y - markMoved.y);
+            dis = sqrtf(dis);
+            if (dis < 2.0f)
+            {
+                ptr->setDead(true);
+                deleteCount++;
+            }
+        }
+
+
+        //Delete
+        std::vector<ObstructBase*>deadObs;
+        for (auto ptr : obstructs)
+        {
+            if (ptr->isDead())
+            {
+                deadObs.emplace_back(ptr);
+            }
+        }
+        for (auto ptr : deadObs)
+        {
+            ObsDelete(ptr);
+        }
+
 
 
 
@@ -74,6 +114,16 @@ void PlayScene::ALL()
         }
 
         DrawFormatString(10, 100, GetColor(255, 255, 255), "size:%d", obstructs.size());
+
+        if (deleteCount >= 10)
+        {
+            return count;
+        }
+
+        if (CheckHitKey(KEY_INPUT_ESCAPE))
+        {
+            return -1.0f;
+        }
 
         ScreenFlip();
     }
@@ -107,5 +157,15 @@ void PlayScene::Entry()
         cellY = rand() % 4;
         Needle* newObj = new Needle(cell[cellX][cellY]);
         obstructs.emplace_back(newObj);
+    }
+}
+
+void PlayScene::ObsDelete(ObstructBase* deleteObs)
+{
+    auto iter = std::find(obstructs.begin(), obstructs.end(), deleteObs);
+    if (iter != obstructs.end())
+    {
+        std::iter_swap(iter, obstructs.end() - 1);
+        obstructs.pop_back();
     }
 }

@@ -7,6 +7,7 @@ public:
 	virtual ~Aim();
 	void Update(float deltaTime,VECTOR pPos);
 	void Draw(bool lockFlag);
+	VECTOR MarkGetter() { return aimMark; }
 
 private:
 	VECTOR nearSquare;

@@ -19,6 +19,8 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine
 	/*SetLightDirection(VGet(0, 0, 1));
 	SetLightPosition(VGet(0, 0, -30));*/
 	
+	bool loop = true;
+	float score = -1.0f;
 
 	SetCameraNearFar(1.0f, 490.0f);
 
@@ -26,11 +28,37 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine
 	SetCameraPositionAndTarget_UpVecY(VGet(0, 0, 0), VGet(0.0f, 0.0f, 250.0f));
 
 	//デバッグ用
-	PlayScene* playScene = new PlayScene();
+	
+
+	while (loop)
+	{
+		while (!CheckHitKey(KEY_INPUT_SPACE))
+		{
+			ClearDrawScreen();
+			DrawFormatString(900, 500, GetColor(255, 255, 255), "Press SPACE to Start");
+			ScreenFlip();
+		}
+		PlayScene* playScene = new PlayScene();
+		score = playScene->ALL();
+		if (score < 0.0f)
+		{
+			break;
+		}
+		delete playScene;
+		while (!CheckHitKey(KEY_INPUT_SPACE))
+		{
+			ClearDrawScreen();
+			DrawFormatString(900, 500, GetColor(255, 255, 255), "SCORE:%f", score);
+			DrawFormatString(900, 550, GetColor(255, 255, 255), "Press SPACE to ReTry");
+			ScreenFlip();
+		}
+		score = -1.0f;
+	}
+
+	
 
 
 
-	playScene->ALL();
-
-
+	DxLib_End();
+	return 0;
 }

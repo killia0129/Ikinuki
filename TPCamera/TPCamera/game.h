@@ -7,7 +7,7 @@ enum DIR
 
 const float turnSpeed = 0.75f;
 const float waveSpeed = 0.75f;
-const float obsSpeed = 150.0f;
+const float obsSpeed = 100.0f;
 const float stageLength = 500.0f;
 const float stageWidth = 40.0f;
 const float playerSpeed = 0.5f;
