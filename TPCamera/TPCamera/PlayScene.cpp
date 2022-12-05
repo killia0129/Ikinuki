@@ -42,7 +42,7 @@ float PlayScene::ALL()
 
 
 
-        if (obsCool > 1.0f)
+        if (obsCool > 3.0f)
         {
             Entry();
             obsCool = 0.0f;
@@ -83,10 +83,19 @@ float PlayScene::ALL()
             VECTOR markMoved = VGet(moveX, moveY, ptr->posGetter().z);
             float dis = (ptr->posGetter().x - markMoved.x) * (ptr->posGetter().x - markMoved.x) +  (ptr->posGetter().y - markMoved.y) * (ptr->posGetter().y - markMoved.y);
             dis = sqrtf(dis);
-            if (dis < 2.0f&&ptr->posGetter().z>10.0f)
+            if (dis < 3.0f&&ptr->posGetter().z>10.0f)
             {
-                ptr->setDead(true);
-                deleteCount++;
+                ptr->GivenDmg(deltaTime);
+                Particle* newEffect = new Particle(ptr->posGetter());
+                particle.emplace_back(newEffect);
+                if (ptr->isDead())
+                {
+                    deleteCount++;
+                }
+            }
+            for (auto _ptr : particle)
+            {
+                _ptr->Update(deltaTime, ptr->posGetter());
             }
         }
         for (auto ptr : expro)
@@ -114,6 +123,15 @@ float PlayScene::ALL()
                 deadExp.emplace_back(ptr);
             }
         }
+        std::vector<Particle*>deadPart;
+        for (auto ptr : particle)
+        {
+            if (ptr->isEnd())
+            {
+                deadPart.emplace_back(ptr);
+            }
+        }
+
 
         for (auto ptr : deadObs)
         {
@@ -122,6 +140,10 @@ float PlayScene::ALL()
         for (auto ptr : deadExp)
         {
             ExpDelete(ptr);
+        }
+        for (auto ptr : deadPart)
+        {
+            PartDelete(ptr);
         }
 
 
@@ -135,6 +157,10 @@ float PlayScene::ALL()
             ptr->Draw();
         }
         for (auto ptr : expro)
+        {
+            ptr->Draw();
+        }
+        for (auto ptr : particle)
         {
             ptr->Draw();
         }
@@ -239,5 +265,15 @@ void PlayScene::ExpDelete(Exprosion* deleteExp)
     {
         std::iter_swap(iter, expro.end() - 1);
         expro.pop_back();
+    }
+}
+
+void PlayScene::PartDelete(Particle* deletePart)
+{
+    auto iter = std::find(particle.begin(), particle.end(), deletePart);
+    if (iter != particle.end())
+    {
+        std::iter_swap(iter, particle.end() - 1);
+        particle.pop_back();
     }
 }

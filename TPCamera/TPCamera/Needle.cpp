@@ -9,6 +9,7 @@ Needle::Needle(VECTOR _pos)
     redColorValue = 0;
     type = NEEDLE;
     turnRad = 0.0f;
+    HP = 1.0f;
 }
 
 Needle::~Needle()
@@ -18,8 +19,12 @@ Needle::~Needle()
 void Needle::Update(float deltaTime)
 {
     turnRad += turnSpeed * deltaTime * 10.0f;
-    pos.z -= obsSpeed * deltaTime * 1.2f;
-    moveDis += obsSpeed * deltaTime * 1.2;
+    pos.z -= obsSpeed * deltaTime;
+    moveDis += obsSpeed * deltaTime;
+    if (HP < 0.0f)
+    {
+        deadFlag = true;
+    }
     ColorChanger();
 }
 

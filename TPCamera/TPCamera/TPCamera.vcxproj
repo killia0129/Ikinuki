@@ -150,6 +150,7 @@
     <ClCompile Include="Object.cpp" />
     <ClCompile Include="ObstructBase.cpp" />
     <ClCompile Include="OverScene.cpp" />
+    <ClCompile Include="Particle.cpp" />
     <ClCompile Include="Player.cpp" />
     <ClCompile Include="PlayScene.cpp" />
     <ClCompile Include="SceneManager.cpp" />
@@ -168,6 +169,7 @@
     <ClInclude Include="Object.h" />
     <ClInclude Include="ObstructBase.h" />
     <ClInclude Include="OverScene.h" />
+    <ClInclude Include="Particle.h" />
     <ClInclude Include="Player.h" />
     <ClInclude Include="PlayScene.h" />
     <ClInclude Include="SceneManager.h" />

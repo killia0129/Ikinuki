@@ -10,6 +10,7 @@ public:
     virtual ~Meteor();
     void Draw();
     void Update(float deltaTime);
+    void GivenDmg(float deltaTime) { HP -= deltaTime; }
 
 private:
     float firstPosX;
@@ -24,5 +25,6 @@ private:
     void ColorChanger();
     int redColorValue;
     float deltaSpeed;
+    float HP;
 };
 

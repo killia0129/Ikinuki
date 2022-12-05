@@ -6,6 +6,7 @@
 #include"Player.h"
 #include"Aim.h"
 #include"Exprosion.h"
+#include"Particle.h"
 
 class PlayScene
 {
@@ -21,12 +22,14 @@ private:
 	Aim* aim = new Aim();
 	std::vector<ObstructBase*>obstructs;
 	std::vector<Exprosion*>expro;
+	std::vector<Particle*>particle;
 	int nowTime;
 	int previousTime;
 	void Entry();
 	void EntryExp(VECTOR _pos);
 	void ObsDelete(ObstructBase* deleteObs);
 	void ExpDelete(Exprosion* deleteExp);
+	void PartDelete(Particle* deletePart);
 	VECTOR cell[4][4];
 	unsigned int seed;
 	float count;

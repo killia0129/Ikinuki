@@ -6,8 +6,8 @@ enum DIR
 };
 
 const float turnSpeed = 0.75f;
-const float waveSpeed = 0.75f;
-const float obsSpeed = 100.0f;
+const float waveSpeed = 0.5f;
+const float obsSpeed = 50.0f;
 const float stageLength = 500.0f;
 const float stageWidth = 40.0f;
 const float playerSpeed = 0.5f;
@@ -16,6 +16,9 @@ const float playerR = 1.5f;
 const float aimR = 5.0f;
 const int aimSpeed = 100.0f;
 const int mouseBuffer = 3;
+const float particleSec = 3.0f;
+const float g = 0.098f;
+const float particleR = 1.0f;
 
 //void AddSpeed(float deltaTime)
 //{

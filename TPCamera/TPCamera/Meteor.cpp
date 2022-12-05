@@ -6,7 +6,7 @@ Meteor::Meteor(VECTOR _pos,bool _wave)
     pos = _pos;
     firstPosX = _pos.x;
     moveDis = 0.0f;
-    rad = 2.5f;
+    rad = 3.5f;
     yaw = 0.0f;
     ang = 0.0f;
     wave = 0.0f;
@@ -14,6 +14,7 @@ Meteor::Meteor(VECTOR _pos,bool _wave)
     Color = GetColor(0, 255, 0);
     redColorValue = 0;
     type = METEOR;
+    HP = 1.5f;
 }
 
 Meteor::~Meteor()
@@ -53,6 +54,10 @@ void Meteor::Update(float deltaTime)
     }
     pos.z -= obsSpeed * deltaTime;
     moveDis += obsSpeed * deltaTime;
+    if (HP < 0.0f)
+    {
+        deadFlag = true;
+    }
     ColorChanger();
 }
 

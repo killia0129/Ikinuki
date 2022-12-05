@@ -9,6 +9,7 @@ public:
     virtual ~Needle();
     void Update(float deltaTime);
     void Draw();
+    void GivenDmg(float deltaTime) { HP -= deltaTime; }
 
 private:
     float moveDis;
@@ -17,6 +18,7 @@ private:
     float turnRad;
     unsigned int Color;
     const float needleLong = 2.0f;
-    const float needleWidth = 1.5f;
+    const float needleWidth = 2.5f;
+    float HP;
 };
 

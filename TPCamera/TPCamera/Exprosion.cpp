@@ -23,5 +23,5 @@ void Exprosion::Update(float deltaTime)
 
 void Exprosion::Draw()
 {
-    DrawSphere3D(pos, 5.0 * (sinf(count * DX_PI_F)), 8, GetColor(100, 255, 255), GetColor(100, 255, 255), false);
+    DrawSphere3D(pos, 5.0 * (sinf(count * DX_PI_F)), 8, GetColor(255, 0, 55), GetColor(255, 0, 55), false);
 }
