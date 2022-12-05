@@ -57,6 +57,7 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine
 			ClearDrawScreen();
 			if (score >= 0.0f)
 			{
+				DrawFormatString(800, 450, GetColor(255, 255, 255), "CLEAR!");
 				DrawFormatString(800, 500, GetColor(255, 255, 255), "TIME :%f •b", score);
 				DrawFormatString(900, 550, GetColor(255, 255, 255), "Press SPACE to Retry");
 				
