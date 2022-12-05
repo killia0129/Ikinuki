@@ -141,6 +141,7 @@
   <ItemGroup>
     <ClCompile Include="Aim.cpp" />
     <ClCompile Include="Camera.cpp" />
+    <ClCompile Include="Exprosion.cpp" />
     <ClCompile Include="InputMove.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="Meteor.cpp" />
@@ -148,6 +149,7 @@
     <ClCompile Include="Needle.cpp" />
     <ClCompile Include="Object.cpp" />
     <ClCompile Include="ObstructBase.cpp" />
+    <ClCompile Include="OverScene.cpp" />
     <ClCompile Include="Player.cpp" />
     <ClCompile Include="PlayScene.cpp" />
     <ClCompile Include="SceneManager.cpp" />
@@ -157,6 +159,7 @@
   <ItemGroup>
     <ClInclude Include="Aim.h" />
     <ClInclude Include="Camera.h" />
+    <ClInclude Include="Exprosion.h" />
     <ClInclude Include="game.h" />
     <ClInclude Include="InputMove.h" />
     <ClInclude Include="Meteor.h" />
@@ -164,6 +167,7 @@
     <ClInclude Include="Needle.h" />
     <ClInclude Include="Object.h" />
     <ClInclude Include="ObstructBase.h" />
+    <ClInclude Include="OverScene.h" />
     <ClInclude Include="Player.h" />
     <ClInclude Include="PlayScene.h" />
     <ClInclude Include="SceneManager.h" />

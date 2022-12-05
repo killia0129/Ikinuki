@@ -16,6 +16,7 @@ PlayScene::PlayScene()
     obsCool = 0.0f;
     deltaTime = 0.0f;
     deleteCount = 0;
+    time = 45.0f;
 }
 
 PlayScene::~PlayScene()
@@ -33,6 +34,7 @@ float PlayScene::ALL()
         deltaTime = (float)(nowTime - previousTime) / 1000.0f;
         count += deltaTime;
         obsCool += deltaTime;
+        time -= deltaTime;
         //AddSpeed(deltaTime);
 
 
@@ -64,7 +66,7 @@ float PlayScene::ALL()
         aim->Update(deltaTime, player->posGetter());
         for (auto ptr : obstructs)
         {
-            if (ptr->posGetter().z < 0.0f)
+            if (ptr->posGetter().z < -10.0f)
             {
                 ptr->setDead(true);
             }
@@ -87,6 +89,10 @@ float PlayScene::ALL()
                 deleteCount++;
             }
         }
+        for (auto ptr : expro)
+        {
+            ptr->Update(deltaTime);
+        }
 
 
         //Delete
@@ -95,12 +101,27 @@ float PlayScene::ALL()
         {
             if (ptr->isDead())
             {
+                EntryExp(ptr->posGetter());
                 deadObs.emplace_back(ptr);
             }
         }
+
+        std::vector<Exprosion*>deadExp;
+        for (auto ptr : expro)
+        {
+            if (ptr->isEnd())
+            {
+                deadExp.emplace_back(ptr);
+            }
+        }
+
         for (auto ptr : deadObs)
         {
             ObsDelete(ptr);
+        }
+        for (auto ptr : deadExp)
+        {
+            ExpDelete(ptr);
         }
 
 
@@ -113,12 +134,46 @@ float PlayScene::ALL()
         {
             ptr->Draw();
         }
+        for (auto ptr : expro)
+        {
+            ptr->Draw();
+        }
 
-        DrawFormatString(10, 100, GetColor(255, 255, 255), "残り　%d　個！",30 - deleteCount);
+        for (int i = 0; i < (30 - deleteCount); i++)
+        {
+            DrawBox(i * 64 + 2, 5, i * 64 + 62, 65,GetColor(255, 255, 255), true);
+        }
+
+        float timeRatio = time / 45.0f;
+
+        DrawBox(2, 70, 2 + (1916 * timeRatio), 130, GetColor(255, 255 * timeRatio, 255 * timeRatio), true);
+
+        //DrawFormatString(10, 100, GetColor(255, 255, 255), "残り　%d　個！",30 - deleteCount);
 
         if (deleteCount >= 30)
         {
+            float num = 0.0f;
+            while (num <= 1100.0f)
+            {
+                DrawBox(0, 0, 1920, num, GetColor(0, 0, 0), true);
+                num += 4.0f;
+                ScreenFlip();
+            }
+            //WaitTimer(1000);
             return count;
+        }
+
+        if (time < 0)
+        {
+            float num = 0.0f;
+            while (num <= 1100.0f)
+            {
+                DrawBox(0, 0, 1920, num, GetColor(0, 0, 0), true);
+                num += 4.0f;
+                ScreenFlip();
+            }
+            //WaitTimer(1000);
+            return -4.0f;
         }
 
         if (CheckHitKey(KEY_INPUT_ESCAPE))
@@ -161,6 +216,12 @@ void PlayScene::Entry()
     }
 }
 
+void PlayScene::EntryExp(VECTOR pos)
+{
+    Exprosion* newObj = new Exprosion(pos);
+    expro.emplace_back(newObj);
+}
+
 void PlayScene::ObsDelete(ObstructBase* deleteObs)
 {
     auto iter = std::find(obstructs.begin(), obstructs.end(), deleteObs);
@@ -168,5 +229,15 @@ void PlayScene::ObsDelete(ObstructBase* deleteObs)
     {
         std::iter_swap(iter, obstructs.end() - 1);
         obstructs.pop_back();
+    }
+}
+
+void PlayScene::ExpDelete(Exprosion* deleteExp)
+{
+    auto iter = std::find(expro.begin(), expro.end(), deleteExp);
+    if (iter != expro.end())
+    {
+        std::iter_swap(iter, expro.end() - 1);
+        expro.pop_back();
     }
 }

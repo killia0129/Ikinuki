@@ -38,13 +38,16 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine
 
 		score = titleScene->ALL();
 		
+		delete titleScene;
+
 		if (score == -2.0f)
 		{
 			break;
 		}
 		PlayScene* playScene = new PlayScene();
 		score = playScene->ALL();
-		if (score < 0.0f)
+		int deleted = playScene->DeleteCountGetter();
+		if (score == -1.0f)
 		{
 			break;
 		}
@@ -52,8 +55,19 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine
 		while (!CheckHitKey(KEY_INPUT_SPACE))
 		{
 			ClearDrawScreen();
-			DrawFormatString(800, 500, GetColor(255, 255, 255), "TIME :%f", score);
-			DrawFormatString(900, 550, GetColor(255, 255, 255), "Press SPACE to Retry");
+			if (score >= 0.0f)
+			{
+				DrawFormatString(800, 500, GetColor(255, 255, 255), "TIME :%f •b", score);
+				DrawFormatString(900, 550, GetColor(255, 255, 255), "Press SPACE to Retry");
+				
+			}
+
+			if (score < 0.0f)
+			{
+				DrawFormatString(800, 500, GetColor(255, 255, 255), "GAME OVER! Žc‚è@%d@ŒÂ",30-deleted);
+				DrawFormatString(900, 550, GetColor(255, 255, 255), "Press SPACE to Retry");
+			}
+
 			if (CheckHitKey(KEY_INPUT_ESCAPE))
 			{
 				loop = false;
