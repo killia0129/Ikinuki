@@ -1,28 +1,26 @@
-#include "PlayScene.h"
+#include "TitleScene.h"
 
-PlayScene::PlayScene()
+TitleScene::TitleScene()
 {
+    nowTime = 0;
+    deltaTime = 0.0f;
+    previousTime = 0;
+    obsCool = 0.0f;
+    seed = 0;
     for (int i = 0; i < 4; i++)
     {
         for (int j = 0; j < 4; j++)
         {
-            cell[i][j] = VGet(-15.0+10.0f * (float)i, -15.0 + 10.0f* (float)j, 500.0f);
+            cell[i][j] = VGet(-15.0 + 10.0f * (float)i, -15.0 + 10.0f * (float)j, 500.0f);
         }
     }
-    seed = 0;
-    nowTime = GetNowCount();
-    previousTime = GetNowCount();
-    count = 0.0f;
-    obsCool = 0.0f;
-    deltaTime = 0.0f;
-    deleteCount = 0;
 }
 
-PlayScene::~PlayScene()
+TitleScene::~TitleScene()
 {
 }
 
-float PlayScene::ALL()
+float TitleScene::ALL()
 {
     while (1)
     {
@@ -31,7 +29,6 @@ float PlayScene::ALL()
 
         nowTime = GetNowCount();
         deltaTime = (float)(nowTime - previousTime) / 1000.0f;
-        count += deltaTime;
         obsCool += deltaTime;
         //AddSpeed(deltaTime);
 
@@ -53,15 +50,14 @@ float PlayScene::ALL()
         previousTime = nowTime;
 
 
-        
+
         //Update
         for (auto ptr : obstructs)
         {
             ptr->Update(deltaTime);
         }
         stage->Update(deltaTime);
-        player->Update(deltaTime);
-        aim->Update(deltaTime, player->posGetter());
+
         for (auto ptr : obstructs)
         {
             if (ptr->posGetter().z < 0.0f)
@@ -70,23 +66,7 @@ float PlayScene::ALL()
             }
         }
 
-        //Hit
-        VECTOR mark = aim->MarkGetter();
-        for (auto ptr : obstructs)
-        {
-            float obsZ = ptr->posGetter().z;
-            float ratio = (obsZ - 3.0f) / (mark.z - 3.0f);
-            float moveX = player->posGetter().x + ((mark.x - player->posGetter().x) * ratio);
-            float moveY = player->posGetter().y + ((mark.y - player->posGetter().y) * ratio);
-            VECTOR markMoved = VGet(moveX, moveY, ptr->posGetter().z);
-            float dis = (ptr->posGetter().x - markMoved.x) * (ptr->posGetter().x - markMoved.x) +  (ptr->posGetter().y - markMoved.y) * (ptr->posGetter().y - markMoved.y);
-            dis = sqrtf(dis);
-            if (dis < 2.0f&&ptr->posGetter().z>10.0f)
-            {
-                ptr->setDead(true);
-                deleteCount++;
-            }
-        }
+       
 
 
         //Delete
@@ -107,21 +87,19 @@ float PlayScene::ALL()
 
 
         stage->Draw();
-        aim->Draw(false);
-        player->Draw();
         for (auto ptr : obstructs)
         {
             ptr->Draw();
         }
 
-        DrawFormatString(10, 100, GetColor(255, 255, 255), "残り　%d　個！",30 - deleteCount);
-
-        if (deleteCount >= 30)
-        {
-            return count;
-        }
+        DrawFormatString(800, 100, GetColor(255, 255, 255), "Press ENTER to Start");
 
         if (CheckHitKey(KEY_INPUT_ESCAPE))
+        {
+            return -2.0f;
+        }
+
+        if (CheckHitKey(KEY_INPUT_RETURN))
         {
             return -1.0f;
         }
@@ -130,7 +108,7 @@ float PlayScene::ALL()
     }
 }
 
-void PlayScene::Entry()
+void TitleScene::Entry()
 {
     int type = rand() % 2;
     int cellX, cellY;
@@ -161,7 +139,7 @@ void PlayScene::Entry()
     }
 }
 
-void PlayScene::ObsDelete(ObstructBase* deleteObs)
+void TitleScene::ObsDelete(ObstructBase* deleteObs)
 {
     auto iter = std::find(obstructs.begin(), obstructs.end(), deleteObs);
     if (iter != obstructs.end())

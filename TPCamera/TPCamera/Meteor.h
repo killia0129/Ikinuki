@@ -23,5 +23,6 @@ private:
     void addAngle(float& _ang, float deltaTime);
     void ColorChanger();
     int redColorValue;
+    float deltaSpeed;
 };
 

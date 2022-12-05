@@ -1,5 +1,6 @@
 #include<DxLib.h>
 #include "PlayScene.h"
+#include"TitleScene.h"
 
 
 int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine, int nCmdShow)
@@ -29,20 +30,14 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine
 
 	//デバッグ用
 	
+	SetFontSize(30);
 
 	while (loop)
 	{
-		while (!CheckHitKey(KEY_INPUT_RETURN))
-		{
-			ClearDrawScreen();
-			DrawFormatString(900, 500, GetColor(255, 255, 255), "Press ENTER to Start");
-			if (CheckHitKey(KEY_INPUT_ESCAPE))
-			{
-				score = -2.0f;
-				break;
-			}
-			ScreenFlip();
-		}
+		TitleScene* titleScene = new TitleScene;
+
+		score = titleScene->ALL();
+		
 		if (score == -2.0f)
 		{
 			break;
@@ -57,8 +52,8 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine
 		while (!CheckHitKey(KEY_INPUT_SPACE))
 		{
 			ClearDrawScreen();
-			DrawFormatString(900, 500, GetColor(255, 255, 255), "SCORE:%f", score);
-			DrawFormatString(900, 550, GetColor(255, 255, 255), "Press SPACE to ReTry");
+			DrawFormatString(800, 500, GetColor(255, 255, 255), "TIME :%f", score);
+			DrawFormatString(900, 550, GetColor(255, 255, 255), "Press SPACE to Retry");
 			if (CheckHitKey(KEY_INPUT_ESCAPE))
 			{
 				loop = false;

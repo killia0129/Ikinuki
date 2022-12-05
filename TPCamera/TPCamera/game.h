@@ -16,3 +16,8 @@ const float playerR = 1.5f;
 const float aimR = 5.0f;
 const int aimSpeed = 100.0f;
 const int mouseBuffer = 3;
+
+//void AddSpeed(float deltaTime)
+//{
+//    obsSpeed += deltaTime / 10.0f;
+//}

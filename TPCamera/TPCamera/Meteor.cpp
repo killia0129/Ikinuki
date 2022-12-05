@@ -33,11 +33,13 @@ void Meteor::Draw()
     DrawCube3D(pos1, pos2, Color, Color, true);
     DrawCube3D(pos1, pos2, GetColor(0,255,0), GetColor(0, 255, 0), false);
     DrawLine3D(pos, VGet(pos.x, -20.0f, pos.z), Color);
+    deltaSpeed = 0.0f;
     //DrawSphere3D(pos,10, 16, GetColor(255, 255, 255), GetColor(255, 255, 255),true);
 }
 
 void Meteor::Update(float deltaTime)
 {
+    deltaSpeed += deltaTime / 10.0f;
     addAngle(ang, deltaTime);
     addAngle(yaw, deltaTime);
     if (waveMoveFlag)
