@@ -9,7 +9,7 @@ Needle::Needle(VECTOR _pos)
     redColorValue = 0;
     type = NEEDLE;
     turnRad = 0.0f;
-    HP = 1.0f;
+    HP = 0.25f;
 }
 
 Needle::~Needle()
@@ -37,6 +37,6 @@ void Needle::Draw()
 
 void Needle::ColorChanger()
 {
-    redColorValue = 255 * (moveDis / stageLength);
+    redColorValue = 255 * (1-(HP / 0.5f));
     Color = GetColor(redColorValue, 255 - redColorValue, 0);
 }

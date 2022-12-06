@@ -14,7 +14,8 @@ Meteor::Meteor(VECTOR _pos,bool _wave)
     Color = GetColor(0, 255, 0);
     redColorValue = 0;
     type = METEOR;
-    HP = 1.5f;
+    HP = 0.5f;
+    deltaSpeed = 0.0f;
 }
 
 Meteor::~Meteor()
@@ -34,7 +35,7 @@ void Meteor::Draw()
     DrawCube3D(pos1, pos2, Color, Color, true);
     DrawCube3D(pos1, pos2, GetColor(0,255,0), GetColor(0, 255, 0), false);
     DrawLine3D(pos, VGet(pos.x, -20.0f, pos.z), Color);
-    deltaSpeed = 0.0f;
+    
     //DrawSphere3D(pos,10, 16, GetColor(255, 255, 255), GetColor(255, 255, 255),true);
 }
 
@@ -72,6 +73,6 @@ void Meteor::addAngle(float& _ang, float deltaTime)
 
 void Meteor::ColorChanger()
 {
-    redColorValue = 255 *(moveDis / stageLength);
+    redColorValue = 255 *(1-(HP / 1.0f));
     Color = GetColor(redColorValue, 255 - redColorValue, 0);
 }

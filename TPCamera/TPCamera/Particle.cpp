@@ -7,7 +7,7 @@ Particle::Particle(VECTOR _pos)
 	count = 0.0f;
 	endFlag = false;
 	xPower = -0.5f + ((float)(rand() % 20) / 20.0f);
-	yPower = -0.5f + ((float)(rand() % 20) / 20.0f);
+	yPower = -0.25f + ((float)(rand() % 20) / 40.0f);
 }
 
 Particle::~Particle()
@@ -30,5 +30,5 @@ void Particle::Update(float deltaTime,VECTOR _pos)
 
 void Particle::Draw()
 {
-	DrawSphere3D(pos, rad, 8, GetColor(255, 0, 55), GetColor(255, 0, 55), true);
+	DrawSphere3D(pos, rad, 8, GetColor(255, 0, 0), GetColor(255, 0, 0), false);
 }

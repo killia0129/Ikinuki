@@ -14,12 +14,14 @@ public:
     void setDead(bool flag) { deadFlag = flag; }
     void setLock(bool flag) { lockFlag = flag; }
     VECTOR posGetter() { return pos; }
-
-protected:
+    int TypeGetter() { return type; }
     enum TYPE
     {
-        METEOR,NEEDLE
+        METEOR, NEEDLE
     };
+
+protected:
+    
     int type;
     bool deadFlag;
     bool lockFlag;

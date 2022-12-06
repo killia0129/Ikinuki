@@ -16,7 +16,7 @@ PlayScene::PlayScene()
     obsCool = 0.0f;
     deltaTime = 0.0f;
     deleteCount = 0;
-    time = 45.0f;
+    time = 60.0f;
 }
 
 PlayScene::~PlayScene()
@@ -90,6 +90,14 @@ float PlayScene::ALL()
                 particle.emplace_back(newEffect);
                 if (ptr->isDead())
                 {
+                    if (ptr->TypeGetter() == ObstructBase::TYPE::METEOR)
+                    {
+                        time += 5.0f;
+                        if (time > 60.0f)
+                        {
+                            time = 60.0f;
+                        }
+                    }
                     deleteCount++;
                 }
             }
@@ -151,15 +159,16 @@ float PlayScene::ALL()
 
         stage->Draw();
         aim->Draw(false);
+        for (auto ptr : expro)
+        {
+            ptr->Draw();
+        }
         player->Draw();
         for (auto ptr : obstructs)
         {
             ptr->Draw();
         }
-        for (auto ptr : expro)
-        {
-            ptr->Draw();
-        }
+        
         for (auto ptr : particle)
         {
             ptr->Draw();
@@ -170,7 +179,7 @@ float PlayScene::ALL()
             DrawBox(i * 64 + 2, 5, i * 64 + 62, 65,GetColor(255, 255, 255), true);
         }
 
-        float timeRatio = time / 45.0f;
+        float timeRatio = time / 60.0f;
 
         DrawBox(2, 70, 2 + (1916 * timeRatio), 130, GetColor(255, 255 * timeRatio, 255 * timeRatio), true);
 
