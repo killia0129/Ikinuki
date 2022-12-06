@@ -101,10 +101,10 @@ float PlayScene::ALL()
                     deleteCount++;
                 }
             }
-            for (auto _ptr : particle)
-            {
-                _ptr->Update(deltaTime, ptr->posGetter());
-            }
+        }
+        for (auto _ptr : particle)
+        {
+            _ptr->Update(deltaTime);
         }
         for (auto ptr : expro)
         {

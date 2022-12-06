@@ -14,7 +14,7 @@ Particle::~Particle()
 {
 }
 
-void Particle::Update(float deltaTime,VECTOR _pos)
+void Particle::Update(float deltaTime)
 {
 	rad = ((particleSec - count) / particleSec) * particleR;
 	yPower -= g * deltaTime;

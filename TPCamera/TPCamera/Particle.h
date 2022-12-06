@@ -6,7 +6,7 @@ class Particle
 public:
     Particle(VECTOR _pos);
     virtual ~Particle();
-    void Update(float deltaTime,VECTOR _pos);
+    void Update(float deltaTime);
     void Draw();
     bool isEnd() { return endFlag; }
 
