@@ -16,7 +16,7 @@ const float playerR = 1.5f;
 const float aimR = 5.0f;
 const int aimSpeed = 100.0f;
 const int mouseBuffer = 1;
-const float particleSec = 3.0f;
+const float particleSec = 1.5f;
 const float g = 0.49f;
 const float particleR = 0.5f;
 

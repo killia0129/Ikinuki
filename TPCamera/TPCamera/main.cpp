@@ -30,7 +30,11 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine
 
 	//デバッグ用
 	
-	SetFontSize(30);
+	LPCSTR font = "font/ARCADE.TTF";
+	AddFontResourceEx(font, FR_PRIVATE, NULL);
+	ChangeFont("Arcade", DX_CHARSET_DEFAULT);
+
+	SetFontSize(40);
 
 	while (loop)
 	{
@@ -57,16 +61,16 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine
 			ClearDrawScreen();
 			if (score >= 0.0f)
 			{
-				DrawFormatString(800, 450, GetColor(255, 255, 255), "CLEAR!");
-				DrawFormatString(800, 500, GetColor(255, 255, 255), "TIME :%f 秒", score);
-				DrawFormatString(900, 550, GetColor(255, 255, 255), "Press SPACE to Retry");
+				DrawFormatString(700, 450, GetColor(0, 255, 0), "CLEAR!");
+				DrawFormatString(700, 500, GetColor(0, 255, 0), "TIME : %f seconds", score);
+				DrawFormatString(800, 550, GetColor(0, 255, 0), "Press SPACE to Retry");
 				
 			}
 
 			if (score < 0.0f)
 			{
-				DrawFormatString(800, 500, GetColor(255, 255, 255), "GAME OVER! 残り　%d　個",30-deleted);
-				DrawFormatString(900, 550, GetColor(255, 255, 255), "Press SPACE to Retry");
+				DrawFormatString(600, 500, GetColor(0, 255, 0), "GAME OVER! %d Objects Remaining",30-deleted);
+				DrawFormatString(800, 550, GetColor(0, 255, 0), "Press SPACE to Retry");
 			}
 
 			if (CheckHitKey(KEY_INPUT_ESCAPE))

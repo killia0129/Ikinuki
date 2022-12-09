@@ -16,7 +16,7 @@ PlayScene::PlayScene()
     obsCool = 0.0f;
     deltaTime = 0.0f;
     deleteCount = 0;
-    time = 60.0f;
+    time = 45.0f;
 }
 
 PlayScene::~PlayScene()
@@ -111,6 +111,7 @@ float PlayScene::ALL()
             ptr->Update(deltaTime);
         }
 
+        ui->Update(time, deleteCount);
 
         //Delete
         std::vector<ObstructBase*>deadObs;
@@ -174,14 +175,16 @@ float PlayScene::ALL()
             ptr->Draw();
         }
 
-        for (int i = 0; i < (30 - deleteCount); i++)
+        ui->Draw();
+
+        /*for (int i = 0; i < (30 - deleteCount); i++)
         {
             DrawBox(i * 64 + 2, 5, i * 64 + 62, 65,GetColor(255, 255, 255), true);
         }
 
         float timeRatio = time / 60.0f;
 
-        DrawBox(2, 70, 2 + (1916 * timeRatio), 130, GetColor(255, 255 * timeRatio, 255 * timeRatio), true);
+        DrawBox(2, 70, 2 + (1916 * timeRatio), 130, GetColor(255, 255 * timeRatio, 255 * timeRatio), true);*/
 
         //DrawFormatString(10, 100, GetColor(255, 255, 255), "残り　%d　個！",30 - deleteCount);
 

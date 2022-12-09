@@ -7,6 +7,7 @@
 #include"Aim.h"
 #include"Exprosion.h"
 #include"Particle.h"
+#include"UI.h"
 
 class PlayScene
 {
@@ -20,6 +21,7 @@ private:
 	Stage* stage = new Stage;
 	Player* player = new Player();
 	Aim* aim = new Aim();
+	UI* ui = new UI();
 	std::vector<ObstructBase*>obstructs;
 	std::vector<Exprosion*>expro;
 	std::vector<Particle*>particle;

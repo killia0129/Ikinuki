@@ -92,7 +92,7 @@ float TitleScene::ALL()
             ptr->Draw();
         }
 
-        DrawFormatString(800, 100, GetColor(255, 255, 255), "Press ENTER to Start");
+        DrawFormatString(675, 50, GetColor(0, 255, 0), "Press ENTER to Start");
 
         if (CheckHitKey(KEY_INPUT_ESCAPE))
         {
