@@ -25,7 +25,7 @@ void UI::Draw()
     DrawBox(timeGageX, timeGageY, timeGageX + 50, 1080 - 100, GetColor(0, 255, 0), true);
     DrawBox(timeGageX, filledGageY, timeGageX + 50, 1080 - 100, GetColor(255*(1-filledRatio), 0, 255 * filledRatio), true);
     SetFontSize(100);
-    DrawFormatString(timeGageX-150, timeGageY-50, GetColor(42, 255, 255), "%d", remainingNum);
+    DrawFormatString(timeGageX-160, timeGageY-50, GetColor(42, 255, 255), "%d", remainingNum);
     SetFontSize(40);
     DrawFormatString(timeGageX, timeGageY - 60, GetColor(42, 255, 255), "/30");
 }

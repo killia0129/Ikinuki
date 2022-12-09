@@ -75,7 +75,7 @@ void Aim::Draw(bool lockFlag)
 		VGet(farSquare.x + aimR * sinf(4.0f * DX_PI_F / 3.0f), farSquare.y + aimR * cosf(4.0f * DX_PI_F / 3.0f), farSquare.z),
 		color, false);
 	DrawCapsule3D(playerPos, lineLast, 0.5f, 4, GetColor(42, 255, 255), GetColor(42, 255, 255), true);
-	DrawCapsule3D(playerPos, lineLast, 0.6f, 4, lockedColor,lockedColor, false);
+	DrawCapsule3D(playerPos, lineLast, 0.45f, 1, lockedColor,lockedColor, false);
 	DrawSphere3D(aimMark, 1.0f, 16, lockedColor, lockedColor, true);
 	DrawLine3D(aimMark, VGet(aimMark.x, -20.0f, aimMark.z), lockedColor);
 	DrawLine3D( VGet(-20.0f, -20.0f, aimMark.z), VGet(20.0f, -20.0f, aimMark.z),lockedColor);
