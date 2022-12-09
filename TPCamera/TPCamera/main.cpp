@@ -23,7 +23,7 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine
 	bool loop = true;
 	float score = -1.0f;
 
-	SetCameraNearFar(1.0f, 490.0f);
+	SetCameraNearFar(1.0f, 499.0f);
 
 	//(0,50,0)‚©‚ç(0,58,-20)‚ðŒ©‚é
 	SetCameraPositionAndTarget_UpVecY(VGet(0, 0, 0), VGet(0.0f, 0.0f, 250.0f));
