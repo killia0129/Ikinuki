@@ -123,9 +123,12 @@ float PlayScene::ALL()
                         {
                             time = 60.0f;
                         }
-                        plusSec = 1;
-                        plusSecX = ConvWorldPosToScreenPos(ptr->posGetter()).x;
-                        plusSecY = ConvWorldPosToScreenPos(ptr->posGetter()).y;
+                        if (plusSec == 0)
+                        {
+                            plusSec = 1;
+                            plusSecX = ConvWorldPosToScreenPos(ptr->posGetter()).x;
+                            plusSecY = ConvWorldPosToScreenPos(ptr->posGetter()).y;
+                        }
                     }
                     deleteCount++;
                 }

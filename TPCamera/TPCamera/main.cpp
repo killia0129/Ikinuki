@@ -72,9 +72,10 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine
 			if (score < 0.0f)
 			{
 				SetFontSize(100);
-				DrawFormatString(300, 500, GetColor(0, 255, 0), "GAME OVER! %d Objects Remaining",30-deleted);
+				DrawFormatString(600, 300, GetColor(0, 255, 0), "GAME OVER!");
+				DrawFormatString(250, 500, GetColor(0, 255, 0), " %d Objects Remaining", 30 - deleted);
 				SetFontSize(50);
-				DrawFormatString(800, 600, GetColor(0, 255, 0), "Press SPACE to Retry");
+				DrawFormatString(600, 700, GetColor(0, 255, 0), "Press SPACE to Retry");
 				SetFontSize(40);
 			}
 

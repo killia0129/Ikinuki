@@ -140,6 +140,8 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="Aim.cpp" />
+    <ClCompile Include="Beam.cpp" />
+    <ClCompile Include="BossScene.cpp" />
     <ClCompile Include="Camera.cpp" />
     <ClCompile Include="Exprosion.cpp" />
     <ClCompile Include="InputMove.cpp" />
@@ -160,6 +162,9 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Aim.h" />
+    <ClInclude Include="Beam.h" />
+    <ClInclude Include="BossMemo.h" />
+    <ClInclude Include="BossScene.h" />
     <ClInclude Include="Camera.h" />
     <ClInclude Include="Exprosion.h" />
     <ClInclude Include="game.h" />
