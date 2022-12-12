@@ -61,16 +61,21 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine
 			ClearDrawScreen();
 			if (score >= 0.0f)
 			{
-				DrawFormatString(700, 450, GetColor(0, 255, 0), "CLEAR!");
-				DrawFormatString(700, 500, GetColor(0, 255, 0), "TIME : %f seconds", score);
-				DrawFormatString(800, 550, GetColor(0, 255, 0), "Press SPACE to Retry");
-				
+				SetFontSize(100);
+				DrawFormatString(750, 400, GetColor(0, 255, 0), "CLEAR!");
+				DrawFormatString(200, 500, GetColor(0, 255, 0), "TIME : %4.3f seconds", score);
+				SetFontSize(50);
+				DrawFormatString(600, 600, GetColor(0, 255, 0), "Press SPACE to Retry");
+				SetFontSize(40);
 			}
 
 			if (score < 0.0f)
 			{
-				DrawFormatString(600, 500, GetColor(0, 255, 0), "GAME OVER! %d Objects Remaining",30-deleted);
-				DrawFormatString(800, 550, GetColor(0, 255, 0), "Press SPACE to Retry");
+				SetFontSize(100);
+				DrawFormatString(300, 500, GetColor(0, 255, 0), "GAME OVER! %d Objects Remaining",30-deleted);
+				SetFontSize(50);
+				DrawFormatString(800, 600, GetColor(0, 255, 0), "Press SPACE to Retry");
+				SetFontSize(40);
 			}
 
 			if (CheckHitKey(KEY_INPUT_ESCAPE))

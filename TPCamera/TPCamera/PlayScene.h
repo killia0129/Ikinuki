@@ -39,5 +39,8 @@ private:
 	float deltaTime;
 	int deleteCount;
 	float time;
+	int plusSec;
+	int plusSecX;
+	int plusSecY;
 };
 

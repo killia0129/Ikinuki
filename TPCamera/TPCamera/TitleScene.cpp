@@ -5,7 +5,7 @@ TitleScene::TitleScene()
     nowTime = 0;
     deltaTime = 0.0f;
     previousTime = 0;
-    obsCool = 0.0f;
+    obsCool = 2.5f;
     seed = 0;
     for (int i = 0; i < 4; i++)
     {
@@ -37,7 +37,7 @@ float TitleScene::ALL()
 
 
 
-        if (obsCool > 1.0f)
+        if (obsCool > 2.5f)
         {
             Entry();
             obsCool = 0.0f;
@@ -93,6 +93,11 @@ float TitleScene::ALL()
         }
 
         DrawFormatString(675, 50, GetColor(0, 255, 0), "Press ENTER to Start");
+        SetFontSize(125);
+        DrawFormatString(350, 175, GetColor(0, 255, 0), "Endress BEAMer");
+        SetFontSize(40);
+        DrawFormatString(250, 400, GetColor(0, 255, 0), "W : UP  A : LEFT  S : DOWN  D : RIGHT  Mouse : Aim");
+
 
         if (CheckHitKey(KEY_INPUT_ESCAPE))
         {
@@ -119,7 +124,7 @@ void TitleScene::Entry()
         int wave = rand() % 2;
         if (wave == 0)
         {
-            cellX = rand() % 2;
+            cellX = rand() % 2 + 1;
             Meteor* newObj = new Meteor(cell[cellX][cellY], true);
             obstructs.emplace_back(newObj);
         }

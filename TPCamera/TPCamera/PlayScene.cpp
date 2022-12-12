@@ -17,6 +17,9 @@ PlayScene::PlayScene()
     deltaTime = 0.0f;
     deleteCount = 0;
     time = 45.0f;
+    plusSec = 0;
+    plusSecX = 0;
+    plusSecY = 0;
 }
 
 PlayScene::~PlayScene()
@@ -71,6 +74,29 @@ float PlayScene::ALL()
                 ptr->setDead(true);
             }
         }
+        if (plusSec == 1)
+        {
+            if (plusSecY > 20)
+            {
+                plusSecY -= 1000 * deltaTime;
+            }
+            else
+            {
+                plusSecY = 20;
+                plusSec = 2;
+            }
+        }
+        if (plusSec == 2)
+        {
+            if (plusSecX <= 1910)
+            {
+                plusSecX += 1000 * deltaTime;
+            }
+            else
+            {
+                plusSec = 0;
+            }
+        }
 
         //Hit
         VECTOR mark = aim->MarkGetter();
@@ -97,6 +123,9 @@ float PlayScene::ALL()
                         {
                             time = 60.0f;
                         }
+                        plusSec = 1;
+                        plusSecX = ConvWorldPosToScreenPos(ptr->posGetter()).x;
+                        plusSecY = ConvWorldPosToScreenPos(ptr->posGetter()).y;
                     }
                     deleteCount++;
                 }
@@ -175,6 +204,13 @@ float PlayScene::ALL()
             ptr->Draw();
         }
 
+        if (plusSec != 0)
+        {
+            SetFontSize(20);
+            DrawString(plusSecX, plusSecY, "+5.0s", GetColor(255, 255, 255));
+            SetFontSize(40);
+        }
+
         ui->Draw();
 
         /*for (int i = 0; i < (30 - deleteCount); i++)
@@ -234,7 +270,7 @@ void PlayScene::Entry()
         int wave = rand() % 2;
         if (wave == 0)
         {
-            cellX = rand() % 2;
+            cellX = rand() % 2 + 1;
             Meteor* newObj = new Meteor(cell[cellX][cellY], true);
             obstructs.emplace_back(newObj);
         }
