@@ -3,16 +3,20 @@
 class Beam
 {
 public:
-    Beam(VECTOR _pos);
+    Beam(int laneNum);
     virtual ~Beam();
     void Update(float deltaTime);
     void Draw();
+    void Start();
 
 private:
     VECTOR pos;
-    int screenX;
-    int screenY;
     int phase;
+    int count;
 
+    enum PHASENAME
+    {
+        READY,ANNOUNCE,ONFIRE,COOLDOWN
+    };
 };
 
