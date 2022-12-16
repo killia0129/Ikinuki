@@ -12,7 +12,7 @@ public:
 private:
     VECTOR pos;
     int phase;
-    int count;
+    float count;
 
     enum PHASENAME
     {
