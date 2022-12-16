@@ -32,7 +32,9 @@ void Meteor::Draw()
     pos2.y = pos.y - rad * cos(0.25 * DX_PI_F);
     pos1.z = pos.z + rad * sin(ang * DX_PI_F);
     pos2.z = pos.z - rad * sin(ang * DX_PI_F);
+    SetDrawBlendMode(DX_BLENDMODE_ALPHA, 200);
     DrawCube3D(pos1, pos2, Color, Color, true);
+    SetDrawBlendMode(DX_BLENDMODE_NOBLEND, 255);
     DrawCube3D(pos1, pos2, GetColor(0,255,0), GetColor(0, 255, 0), false);
     DrawLine3D(pos, VGet(pos.x, -20.0f, pos.z), Color);
     

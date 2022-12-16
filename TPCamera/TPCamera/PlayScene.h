@@ -8,6 +8,7 @@
 #include"Exprosion.h"
 #include"Particle.h"
 #include"UI.h"
+#include"Beam.h"
 
 class PlayScene
 {
@@ -22,6 +23,7 @@ private:
 	Player* player = new Player();
 	Aim* aim = new Aim();
 	UI* ui = new UI();
+	Beam* beam[4];
 	std::vector<ObstructBase*>obstructs;
 	std::vector<Exprosion*>expro;
 	std::vector<Particle*>particle;
@@ -36,11 +38,13 @@ private:
 	unsigned int seed;
 	float count;
 	float obsCool;
+	float beamCool;
 	float deltaTime;
 	int deleteCount;
 	float time;
 	int plusSec;
 	int plusSecX;
 	int plusSecY;
+	
 };
 

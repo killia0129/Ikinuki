@@ -14,12 +14,18 @@ PlayScene::PlayScene()
     previousTime = GetNowCount();
     count = 0.0f;
     obsCool = 0.0f;
+    beamCool = 0.0f;
     deltaTime = 0.0f;
     deleteCount = 0;
     time = 45.0f;
     plusSec = 0;
     plusSecX = 0;
     plusSecY = 0;
+    for (int i = 0; i < 4; i++)
+    {
+        Beam* tmp = new Beam(i);
+        beam[i] = tmp;
+    }
 }
 
 PlayScene::~PlayScene()
@@ -38,6 +44,10 @@ float PlayScene::ALL()
         count += deltaTime;
         obsCool += deltaTime;
         time -= deltaTime;
+        if (deleteCount >= 15)//Œã‚Å•Ï‚¦‚é
+        {
+            beamCool += deltaTime;
+        }
         //AddSpeed(deltaTime);
 
 
@@ -49,6 +59,11 @@ float PlayScene::ALL()
         {
             Entry();
             obsCool = 0.0f;
+        }
+        if (beamCool >= 6.0f)
+        {
+            beam[rand() % 4]->Start();
+            beamCool = 0.0f;
         }
         seed++;
         if (seed > 100000)
@@ -67,6 +82,10 @@ float PlayScene::ALL()
         stage->Update(deltaTime);
         player->Update(deltaTime);
         aim->Update(deltaTime, player->posGetter());
+        for (auto ptr : beam)
+        {
+            ptr->Update(deltaTime);
+        }
         for (auto ptr : obstructs)
         {
             if (ptr->posGetter().z < -10.0f)
@@ -118,7 +137,7 @@ float PlayScene::ALL()
                 {
                     if (ptr->TypeGetter() == ObstructBase::TYPE::METEOR)
                     {
-                        time += 5.0f;
+                        time += 10.0f;
                         if (time > 60.0f)
                         {
                             time = 60.0f;
@@ -132,6 +151,13 @@ float PlayScene::ALL()
                     }
                     deleteCount++;
                 }
+            }
+        }
+        for (auto ptr : beam)
+        {
+            if (ptr->HitCheck(player->posGetter()))
+            {
+                time -= 3.0f;
             }
         }
         for (auto _ptr : particle)
@@ -210,8 +236,13 @@ float PlayScene::ALL()
         if (plusSec != 0)
         {
             SetFontSize(20);
-            DrawString(plusSecX, plusSecY, "+5.0s", GetColor(255, 255, 255));
+            DrawString(plusSecX, plusSecY, "+10.0s", GetColor(255, 255, 255));
             SetFontSize(40);
+        }
+
+        for (auto ptr : beam)
+        {
+            ptr->Draw();
         }
 
         ui->Draw();

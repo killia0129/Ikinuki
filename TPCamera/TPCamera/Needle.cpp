@@ -30,7 +30,9 @@ void Needle::Update(float deltaTime)
 
 void Needle::Draw()
 {
+    SetDrawBlendMode(DX_BLENDMODE_ALPHA, 200);
     DrawCone3D(pos, VGet(pos.x, pos.y, pos.z + needleLong), needleWidth, 16, Color, Color, true);
+    SetDrawBlendMode(DX_BLENDMODE_NOBLEND, 255);
     DrawCone3D(pos, VGet(pos.x, pos.y, pos.z + needleLong), needleWidth, 8, GetColor(0, 255, 0), GetColor(0,255,0), false);
     DrawLine3D(pos, VGet(pos.x, -20.0f, pos.z), Color);
 }
