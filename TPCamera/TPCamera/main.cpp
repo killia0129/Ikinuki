@@ -22,6 +22,7 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine
 	
 	bool loop = true;
 	float score = -1.0f;
+	int redValue = 0, greenValue = 255, blueValue = 0;
 
 	SetCameraNearFar(1.0f, 499.0f);
 
@@ -61,8 +62,41 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine
 			ClearDrawScreen();
 			if (score >= 0.0f)
 			{
+				if (redValue == 0)
+				{
+					greenValue -= 2;
+					blueValue += 2;
+					if (greenValue <= 0)
+					{
+						redValue = 1;
+						greenValue = 0;
+						blueValue = 254;
+					}
+				}
+				if (greenValue == 0)
+				{
+					blueValue -= 2;
+					redValue += 2;
+					if (blueValue <= 0)
+					{
+						redValue = 254;
+						greenValue = 1;
+						blueValue = 0;
+					}
+				}
+				if (blueValue == 0)
+				{
+					redValue -= 2;
+					greenValue += 2;
+					if (redValue <= 0)
+					{
+						redValue = 0;
+						greenValue = 254;
+						blueValue = 1;
+					}
+				}
 				SetFontSize(100);
-				DrawFormatString(750, 400, GetColor(0, 255, 0), "CLEAR!");
+				DrawFormatString(750, 400, GetColor(redValue, greenValue, blueValue), "CLEAR!");
 				DrawFormatString(200, 500, GetColor(0, 255, 0), "TIME : %4.3f seconds", score);
 				SetFontSize(50);
 				DrawFormatString(600, 600, GetColor(0, 255, 0), "Press SPACE to Retry");

@@ -26,6 +26,8 @@ PlayScene::PlayScene()
         Beam* tmp = new Beam(i);
         beam[i] = tmp;
     }
+    /*BossScene* boss = new BossScene(VGet(0, 0, 500));
+    obstructs.emplace_back(boss);*/
 }
 
 PlayScene::~PlayScene()
@@ -44,7 +46,7 @@ float PlayScene::ALL()
         count += deltaTime;
         obsCool += deltaTime;
         time -= deltaTime;
-        if (deleteCount >= 15)//Œã‚Å•Ï‚¦‚é
+        if (deleteCount >= 10)//Œã‚Å•Ï‚¦‚é
         {
             beamCool += deltaTime;
         }
@@ -62,7 +64,21 @@ float PlayScene::ALL()
         }
         if (beamCool >= 6.0f)
         {
-            beam[rand() % 4]->Start();
+            if (deleteCount < 20)
+            {
+                beam[rand() % 4]->Start();
+            }
+            else
+            {
+                int tmp1 = rand() % 4;
+                int tmp2;
+                do
+                {
+                    tmp2 = rand() % 4;
+                } while (tmp1 == tmp2);
+                beam[tmp1]->Start();
+                beam[tmp2]->Start();
+            }
             beamCool = 0.0f;
         }
         seed++;

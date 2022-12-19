@@ -9,6 +9,7 @@
 #include"Particle.h"
 #include"UI.h"
 #include"Beam.h"
+#include"BossScene.h"
 
 class PlayScene
 {
