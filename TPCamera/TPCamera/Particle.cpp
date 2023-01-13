@@ -30,5 +30,7 @@ void Particle::Update(float deltaTime)
 
 void Particle::Draw()
 {
+	SetDrawBlendMode(DX_BLENDMODE_ALPHA, 128);
 	DrawSphere3D(pos, rad, 8, GetColor(255, 0, 0), GetColor(255, 0, 0), false);
+	SetDrawBlendMode(DX_BLENDMODE_NOBLEND, 255);
 }

@@ -75,7 +75,7 @@ void Beam::Draw()
                 DrawLine(lane * 480, 0,lane* 480, 1080, GetColor(255, 0, 0), 3);
                 DrawLine((lane+1) * 480, 0, (lane+1) * 480, 1080, GetColor(255, 0, 0), 3);
                 SetFontSize(100);
-                DrawString(240 + lane * 480, 530, "!", GetColor(255, 0, 0));
+                DrawString(10 + lane * 480, 530, "!!!!!!", GetColor(255, 0, 0));
             }
             break;
 
