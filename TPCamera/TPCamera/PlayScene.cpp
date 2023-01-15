@@ -21,6 +21,8 @@ PlayScene::PlayScene()
     plusSec = 0;
     plusSecX = 0;
     plusSecY = 0;
+    fase = NORMAL;
+    faseMoving = false;
     for (int i = 0; i < 4; i++)
     {
         Beam* tmp = new Beam(i);
@@ -55,13 +57,49 @@ float PlayScene::ALL()
 
         srand(seed);
 
-
-
-        if (obsCool > 3.0f)
+        if (fase == NORMAL)
         {
-            Entry();
-            obsCool = 0.0f;
+
+            if (obsCool > 3.0f)
+            {
+                Entry();
+                obsCool = 0.0f;
+            }
         }
+        if (fase == SETBOSS)
+        {
+            if (faseMoving)
+            {
+                for (auto ptr : obstructs)
+                {
+                    ptr->setDead(true);
+                }
+                std::vector<ObstructBase*>deadObs;
+                for (auto ptr : obstructs)
+                {
+                    if (ptr->isDead())
+                    {
+                        EntryExp(ptr->posGetter());
+                        deadObs.emplace_back(ptr);
+                    }
+                }
+                for (auto ptr : deadObs)
+                {
+                    ObsDelete(ptr);
+                }
+                if (expro.size() <= 0)
+                {
+                    faseMoving = false;
+                }
+            }
+            if (!faseMoving)
+            {
+                fase = BOSS;
+                BossScene* boss = new BossScene(VGet(0.0f, 0.0f, 500.0f));
+                obstructs.emplace_back(boss);
+            }
+        }
+
         if (beamCool >= 6.0f)
         {
             if (deleteCount < 20)
@@ -86,7 +124,7 @@ float PlayScene::ALL()
         {
             seed = 0;
         }
-        previousTime = nowTime;
+        
 
 
         
@@ -144,27 +182,43 @@ float PlayScene::ALL()
             VECTOR markMoved = VGet(moveX, moveY, ptr->posGetter().z);
             float dis = (ptr->posGetter().x - markMoved.x) * (ptr->posGetter().x - markMoved.x) +  (ptr->posGetter().y - markMoved.y) * (ptr->posGetter().y - markMoved.y);
             dis = sqrtf(dis);
-            if (dis < 3.0f&&ptr->posGetter().z>10.0f)
+            if (fase == NORMAL)
             {
-                ptr->GivenDmg(deltaTime);
-                Particle* newEffect = new Particle(ptr->posGetter());
-                particle.emplace_back(newEffect);
+                if (dis < 3.0f && ptr->posGetter().z>10.0f)
+                {
+                    ptr->GivenDmg(deltaTime);
+                    Particle* newEffect = new Particle(ptr->posGetter());
+                    particle.emplace_back(newEffect);
+                    if (ptr->isDead())
+                    {
+                        if (ptr->TypeGetter() == ObstructBase::TYPE::METEOR)
+                        {
+                            time += 10.0f;
+                            if (time > 60.0f)
+                            {
+                                time = 60.0f;
+                            }
+                            if (plusSec == 0)
+                            {
+                                plusSec = 1;
+                                plusSecX = ConvWorldPosToScreenPos(ptr->posGetter()).x;
+                                plusSecY = ConvWorldPosToScreenPos(ptr->posGetter()).y;
+                            }
+                        }
+                        deleteCount++;
+                    }
+                }
+            }
+            if (fase == BOSS)
+            {
+                if (dis <= 7.0f)
+                {
+                    ptr->GivenDmg(deltaTime);
+                    Particle* newEffect = new Particle(ptr->posGetter());
+                    particle.emplace_back(newEffect);
+                }
                 if (ptr->isDead())
                 {
-                    if (ptr->TypeGetter() == ObstructBase::TYPE::METEOR)
-                    {
-                        time += 10.0f;
-                        if (time > 60.0f)
-                        {
-                            time = 60.0f;
-                        }
-                        if (plusSec == 0)
-                        {
-                            plusSec = 1;
-                            plusSecX = ConvWorldPosToScreenPos(ptr->posGetter()).x;
-                            plusSecY = ConvWorldPosToScreenPos(ptr->posGetter()).y;
-                        }
-                    }
                     deleteCount++;
                 }
             }
@@ -263,6 +317,8 @@ float PlayScene::ALL()
 
         ui->Draw();
 
+        //DrawFormatString(10, 20, GetColor(255, 255, 255), "%d,%d,%d", expro.size(),fase,obstructs.size());
+
         /*for (int i = 0; i < (30 - deleteCount); i++)
         {
             DrawBox(i * 64 + 2, 5, i * 64 + 62, 65,GetColor(255, 255, 255), true);
@@ -273,6 +329,12 @@ float PlayScene::ALL()
         DrawBox(2, 70, 2 + (1916 * timeRatio), 130, GetColor(255, 255 * timeRatio, 255 * timeRatio), true);*/
 
         //DrawFormatString(10, 100, GetColor(255, 255, 255), "残り　%d　個！",30 - deleteCount);
+
+        if (deleteCount == 29&&fase==NORMAL)
+        {
+            fase = SETBOSS;
+            faseMoving = true;
+        }
 
         if (deleteCount >= 30)
         {
@@ -304,6 +366,8 @@ float PlayScene::ALL()
         {
             return -1.0f;
         }
+
+        previousTime = nowTime;
 
         ScreenFlip();
     }

@@ -9,6 +9,7 @@ public:
     void Draw();
     void Start();
     bool HitCheck(VECTOR pPos);
+  
 
 private:
     VECTOR pos;

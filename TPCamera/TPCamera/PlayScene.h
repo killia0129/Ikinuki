@@ -47,5 +47,12 @@ private:
 	int plusSecX;
 	int plusSecY;
 	
+	int fase;
+	bool faseMoving;
+
+	enum FASE
+	{
+		NORMAL,SETBOSS,BOSS
+	};
 };
 

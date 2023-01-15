@@ -18,7 +18,12 @@ private:
     float coreR;
     float HP;
     float rad;
+    float xSpeed;
+    float ySpeed;
     VECTOR line1Start, line1End;
     VECTOR line2Start, line2End;
+    unsigned int Color;
+    void ColorChanger();
+    int redColorValue;
 };
 

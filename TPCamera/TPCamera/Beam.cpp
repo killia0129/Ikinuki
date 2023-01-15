@@ -124,3 +124,4 @@ bool Beam::HitCheck(VECTOR pPos)
     }
     return false;
 }
+
