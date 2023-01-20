@@ -14,6 +14,9 @@ TitleScene::TitleScene()
             cell[i][j] = VGet(-15.0 + 10.0f * (float)i, -15.0 + 10.0f * (float)j, 500.0f);
         }
     }
+    colorScreen = MakeScreen(1920, 1080, false);
+    DownScaleScreen = MakeScreen(1920 / 2, 1080 / 2, false);
+    gaussScreen = MakeScreen(1920 / 2, 1080 / 2, false);
 }
 
 TitleScene::~TitleScene()
@@ -24,8 +27,9 @@ float TitleScene::ALL()
 {
     while (1)
     {
-        ClearDrawScreen();
+        SetDrawScreen(colorScreen);
 
+        ClearDrawScreen();
 
         nowTime = GetNowCount();
         deltaTime = (float)(nowTime - previousTime) / 1000.0f;
@@ -35,6 +39,8 @@ float TitleScene::ALL()
 
         srand(seed);
 
+        SetCameraNearFar(1.0f, 499.0f);
+        SetCameraPositionAndTarget_UpVecY(VGet(0, 0, 0), VGet(0.0f, 0.0f, 250.0f));
 
 
         if (obsCool > 2.5f)
@@ -94,9 +100,24 @@ float TitleScene::ALL()
 
         DrawFormatString(675, 50, GetColor(0, 255, 0), "Press ENTER to Start");
         SetFontSize(125);
-        DrawFormatString(350, 175, GetColor(0, 255, 0), "Endress BEAMer");
+        DrawFormatString(350, 175, GetColor(0, 255, 0), "EndLess BEAMer");
         SetFontSize(40);
-        DrawFormatString(250, 400, GetColor(0, 255, 0), "W : UP  A : LEFT  S : DOWN  D : RIGHT  Mouse : Aim");
+        DrawFormatString(600, 400, GetColor(0, 255, 0), "L-Stick : MOVE  R-Stick : Aim");
+
+        GraphFilterBlt(colorScreen, DownScaleScreen, DX_GRAPH_FILTER_DOWN_SCALE, 2);
+        GraphFilterBlt(DownScaleScreen, gaussScreen, DX_GRAPH_FILTER_GAUSS, 32, 1500);
+        SetDrawScreen(gaussScreen);
+        //DrawBox(0, 0, 1920 / 2, 12, GetColor(0, 0, 0), true);
+        SetDrawScreen(DX_SCREEN_BACK);
+        DrawGraph(0, 0, colorScreen, false);
+        SetDrawMode(DX_DRAWMODE_BILINEAR);
+        SetDrawBlendMode(DX_BLENDMODE_ADD, 255);
+        DrawExtendGraph(0, 0, 1920, 1080, gaussScreen, false);
+        //SetDrawBlendMode(DX_BLENDMODE_ADD, 169);
+        //DrawExtendGraph(0, 0, 1920, 1080, gaussScreen, false);
+
+        SetDrawBlendMode(DX_BLENDMODE_NOBLEND, 255);
+        SetDrawMode(DX_DRAWMODE_ANISOTROPIC);
 
 
         if (CheckHitKey(KEY_INPUT_ESCAPE))

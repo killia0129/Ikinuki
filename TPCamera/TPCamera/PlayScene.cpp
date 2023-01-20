@@ -28,8 +28,12 @@ PlayScene::PlayScene()
         Beam* tmp = new Beam(i);
         beam[i] = tmp;
     }
+    colorScreen = MakeScreen(1920, 1080, false);
+    DownScaleScreen = MakeScreen(1920 / 2, 1080 / 2, false);
+    gaussScreen = MakeScreen(1920 / 2, 1080 / 2, false);
     /*BossScene* boss = new BossScene(VGet(0, 0, 500));
     obstructs.emplace_back(boss);*/
+
 }
 
 PlayScene::~PlayScene()
@@ -40,8 +44,9 @@ float PlayScene::ALL()
 {
     while (1)
     {
-        ClearDrawScreen();
+        SetDrawScreen(colorScreen);
 
+        ClearDrawScreen();
 
         nowTime = GetNowCount();
         deltaTime = (float)(nowTime - previousTime) / 1000.0f;
@@ -54,6 +59,8 @@ float PlayScene::ALL()
         }
         //AddSpeed(deltaTime);
 
+        SetCameraNearFar(1.0f, 499.0f);
+        SetCameraPositionAndTarget_UpVecY(VGet(0, 0, 0), VGet(0.0f, 0.0f, 250.0f));
 
         srand(seed);
 
@@ -336,6 +343,28 @@ float PlayScene::ALL()
             faseMoving = true;
         }
 
+
+
+        if (CheckHitKey(KEY_INPUT_ESCAPE))
+        {
+            return -1.0f;
+        }
+
+        GraphFilterBlt(colorScreen, DownScaleScreen, DX_GRAPH_FILTER_DOWN_SCALE, 2);
+        GraphFilterBlt(DownScaleScreen, gaussScreen, DX_GRAPH_FILTER_GAUSS, 32, 1500);
+        SetDrawScreen(gaussScreen);
+        DrawBox(0, 0, 1920 / 2, 12, GetColor(0, 0, 0), true);
+        SetDrawScreen(DX_SCREEN_BACK);
+        DrawGraph(0, 0, colorScreen, false);
+        SetDrawMode(DX_DRAWMODE_BILINEAR);
+        SetDrawBlendMode(DX_BLENDMODE_ADD, 255);
+        DrawExtendGraph(0, 0, 1920, 1080, gaussScreen, false);
+        SetDrawBlendMode(DX_BLENDMODE_ADD, 144);
+        DrawExtendGraph(0, 0, 1920, 1080, gaussScreen, false);
+
+        SetDrawBlendMode(DX_BLENDMODE_NOBLEND, 255);
+        SetDrawMode(DX_DRAWMODE_ANISOTROPIC);
+
         if (deleteCount >= 30)
         {
             float num = 0.0f;
@@ -360,11 +389,6 @@ float PlayScene::ALL()
             }
             //WaitTimer(1000);
             return -4.0f;
-        }
-
-        if (CheckHitKey(KEY_INPUT_ESCAPE))
-        {
-            return -1.0f;
         }
 
         previousTime = nowTime;

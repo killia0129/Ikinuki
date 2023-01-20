@@ -80,7 +80,7 @@ void Beam::Draw()
             break;
 
         case ONFIRE:
-            SetDrawBlendMode(DX_BLENDMODE_ALPHA, 169);
+            SetDrawBlendMode(DX_BLENDMODE_ALPHA, 144);
             DrawCapsule3D(pos, beamLast, beamR, 8, GetColor(255, 0, 0), GetColor(255, 0, 0), true);
             DrawCapsule3D(pos, beamLast, beamR, 4, GetColor(42, 255, 255), GetColor(42, 255, 255), false);
             SetDrawBlendMode(DX_BLENDMODE_NOBLEND, 255);

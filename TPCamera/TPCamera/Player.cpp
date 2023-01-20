@@ -14,6 +14,53 @@ Player::~Player()
 void Player::Update(float deltaTime)
 {
 	int keyInput = input.Input();
+	XINPUT_STATE padInput;
+	GetJoypadXInputState(DX_INPUT_KEY_PAD1, &padInput);
+	if (padInput.ThumbLX < 0)
+	{
+		if (padInput.ThumbLX < -16383)
+		{
+			pos.x -= playerSpeed;
+		}
+		else
+		{
+			pos.x -= playerSpeed / 2;
+		}
+	}
+	if (padInput.ThumbLX > 0)
+	{
+		if (padInput.ThumbLX > 16383)
+		{
+			pos.x += playerSpeed;
+		}
+		else
+		{
+			pos.x += playerSpeed / 2;
+		}
+	}
+	if (padInput.ThumbLY < 0)
+	{
+		if (padInput.ThumbLY < -16383)
+		{
+			pos.y -= playerSpeed;
+		}
+		else
+		{
+			pos.y -= playerSpeed / 2;
+		}
+	}
+	if (padInput.ThumbLY > 0)
+	{
+		if (padInput.ThumbLY > 16383)
+		{
+			pos.y += playerSpeed;
+		}
+		else
+		{
+			pos.y += playerSpeed / 2;
+		}
+	}
+
 	switch (keyInput)
 	{
 	case DIR::AHEAD:

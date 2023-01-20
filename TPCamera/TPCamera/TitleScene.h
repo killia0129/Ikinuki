@@ -21,5 +21,8 @@ private:
     void Entry();
     void ObsDelete(ObstructBase* deleteObs);
     VECTOR cell[4][4];
+    int colorScreen;
+    int DownScaleScreen;
+    int gaussScreen;
 };
 

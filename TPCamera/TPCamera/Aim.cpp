@@ -45,13 +45,61 @@ void Aim::Update(float deltaTime, VECTOR pPos)
 		aimMark.y += aimSpeed * deltaTime;
 	}
 
+	XINPUT_STATE padInput;
+	GetJoypadXInputState(DX_INPUT_KEY_PAD1, &padInput);
+	if (padInput.ThumbRX < 0)
+	{
+		if (padInput.ThumbRX < -16383)
+		{
+			aimMark.x -= aimSpeed * deltaTime;
+		}
+		else
+		{
+			aimMark.x -= aimSpeed * deltaTime / 2;
+		}
+	}
+	if (padInput.ThumbRX > 0)
+	{
+		if (padInput.ThumbRX > 16383)
+		{
+			aimMark.x += aimSpeed * deltaTime;
+		}
+		else
+		{
+			aimMark.x += aimSpeed * deltaTime / 2;
+		}
+	}
+	if (padInput.ThumbRY < 0)
+	{
+		if (padInput.ThumbRY < -16383)
+		{
+			aimMark.y -= aimSpeed * deltaTime;
+		}
+		else
+		{
+			aimMark.y -= aimSpeed * deltaTime / 2;
+		}
+	}
+	if (padInput.ThumbRY > 0)
+	{
+		if (padInput.ThumbRY > 16383)
+		{
+			aimMark.y += aimSpeed * deltaTime;
+		}
+		else
+		{
+			aimMark.y += aimSpeed * deltaTime / 2;
+		}
+	}
+
+
 	playerPos.z += playerSize / 2.0f;
 
 	nearSquare.x = (aimMark.x - playerPos.x) * nearMarkRatio + playerPos.x;
 	nearSquare.y = (aimMark.y - playerPos.y) * nearMarkRatio + playerPos.y;
 	farSquare.x = (aimMark.x - playerPos.x) * farMarkRatio + playerPos.x;
 	farSquare.y = (aimMark.y - playerPos.y) * farMarkRatio + playerPos.y;
-	lineLast.x = (aimMark.x - playerPos.x) * lastMarkRatio + playerPos.x;
+	lineLast.x = (aimMark.x - playerPos.x) * lastMarkRatio + playerPos.x; 
 	lineLast.y = (aimMark.y - playerPos.y) * lastMarkRatio + playerPos.y;
 	SetMousePoint(1920 / 2, 1080 / 2);
 }

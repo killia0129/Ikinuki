@@ -145,6 +145,7 @@
     <ClCompile Include="Camera.cpp" />
     <ClCompile Include="Exprosion.cpp" />
     <ClCompile Include="InputMove.cpp" />
+    <ClCompile Include="LineEffect.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="Meteor.cpp" />
     <ClCompile Include="Move.cpp" />
@@ -169,6 +170,7 @@
     <ClInclude Include="Exprosion.h" />
     <ClInclude Include="game.h" />
     <ClInclude Include="InputMove.h" />
+    <ClInclude Include="LineEffect.h" />
     <ClInclude Include="Meteor.h" />
     <ClInclude Include="Move.h" />
     <ClInclude Include="Needle.h" />

@@ -60,6 +60,8 @@ void BossScene::Update(float deltaTime)
     line2Start = VGet(pos.x - mainR * sinf(0.25f * DX_PI_F) * cosf((rad + 1.0f) * DX_PI_F), pos.y - mainR * cos(0.25f * DX_PI_F), pos.z - mainR * sinf(0.25f * DX_PI_F) * sinf((rad + 1.0f) * DX_PI_F));
     line2End = VGet(pos.x + mainR * sinf(0.25f * DX_PI_F) * cosf((rad + 1.0f) * DX_PI_F), pos.y + mainR * cos(0.25f * DX_PI_F), pos.z + mainR * sinf(0.25f * DX_PI_F) * sinf((rad + 1.0f) * DX_PI_F));
 
+    ColorChanger();
+
     if (HP <= 0.0f)
     {
         deadFlag = true;
@@ -79,6 +81,6 @@ void BossScene::Draw()
 
 void BossScene::ColorChanger()
 {
-    redColorValue = 255 * (1 - (HP / 0.5f));
+    redColorValue = 255 * (1 - (HP / 2.0f));
     Color = GetColor(redColorValue, 255 - redColorValue, 0);
 }

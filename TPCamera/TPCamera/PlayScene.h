@@ -50,6 +50,10 @@ private:
 	int fase;
 	bool faseMoving;
 
+	int colorScreen;
+	int DownScaleScreen;
+	int gaussScreen;
+
 	enum FASE
 	{
 		NORMAL,SETBOSS,BOSS
