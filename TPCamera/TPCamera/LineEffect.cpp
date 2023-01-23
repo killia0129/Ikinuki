@@ -12,3 +12,15 @@ LineEffect::LineEffect()
         //çÏÇËÇ©ÇØ
     }
 }
+
+LineEffect::~LineEffect()
+{
+}
+
+void LineEffect::Update(float deltaTime)
+{
+}
+
+void LineEffect::Draw()
+{
+}

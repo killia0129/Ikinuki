@@ -30,7 +30,7 @@ void BossScene::Update(float deltaTime)
     }
     if (pos.z >= 200)
     {
-        pos.z -= 20.0f * deltaTime;
+        pos.z -= 15.0f * deltaTime;
     }
     pos.x += xSpeed;
     pos.y += ySpeed;
