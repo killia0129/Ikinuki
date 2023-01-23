@@ -4,9 +4,9 @@ class LineEffect:public Object
 {
 public:
     LineEffect();
-    virtual ~LineEffect();
+    /*virtual ~LineEffect();
     void Update(float deltaTime);
-    void Draw();
+    void Draw();*/
 
 private:
     bool endFlag;

@@ -53,6 +53,7 @@ private:
 	int colorScreen;
 	int DownScaleScreen;
 	int gaussScreen;
+	float blinkRad;
 
 	enum FASE
 	{

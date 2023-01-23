@@ -31,6 +31,7 @@ PlayScene::PlayScene()
     colorScreen = MakeScreen(1920, 1080, false);
     DownScaleScreen = MakeScreen(1920 / 2, 1080 / 2, false);
     gaussScreen = MakeScreen(1920 / 2, 1080 / 2, false);
+    blinkRad = 0.0f;
     /*BossScene* boss = new BossScene(VGet(0, 0, 500));
     obstructs.emplace_back(boss);*/
 
@@ -176,6 +177,23 @@ float PlayScene::ALL()
             {
                 plusSec = 0;
             }
+        }
+
+        if (time < 20.0f)
+        {
+            blinkRad += 1.0 * deltaTime;
+            if (time < 10.0f)
+            {
+                blinkRad += 1.0 * deltaTime;
+            }
+            if (blinkRad >= 2.0f)
+            {
+                blinkRad = 0.0f;
+            }
+        }
+        else
+        {
+            blinkRad = 0.0f;
         }
 
         //Hit
@@ -324,18 +342,6 @@ float PlayScene::ALL()
 
         ui->Draw();
 
-        //DrawFormatString(10, 20, GetColor(255, 255, 255), "%d,%d,%d", expro.size(),fase,obstructs.size());
-
-        /*for (int i = 0; i < (30 - deleteCount); i++)
-        {
-            DrawBox(i * 64 + 2, 5, i * 64 + 62, 65,GetColor(255, 255, 255), true);
-        }
-
-        float timeRatio = time / 60.0f;
-
-        DrawBox(2, 70, 2 + (1916 * timeRatio), 130, GetColor(255, 255 * timeRatio, 255 * timeRatio), true);*/
-
-        //DrawFormatString(10, 100, GetColor(255, 255, 255), "残り　%d　個！",30 - deleteCount);
 
         if (deleteCount == 29&&fase==NORMAL)
         {
@@ -356,10 +362,10 @@ float PlayScene::ALL()
         DrawBox(0, 0, 1920 / 2, 12, GetColor(0, 0, 0), true);
         SetDrawScreen(DX_SCREEN_BACK);
         DrawGraph(0, 0, colorScreen, false);
-        SetDrawMode(DX_DRAWMODE_BILINEAR);
-        SetDrawBlendMode(DX_BLENDMODE_ADD, 255);
+        SetDrawMode(DX_DRAWMODE_ANISOTROPIC);
+        SetDrawBlendMode(DX_BLENDMODE_ADD, 255 * (fabs(cosf(blinkRad*DX_PI_F))));
         DrawExtendGraph(0, 0, 1920, 1080, gaussScreen, false);
-        SetDrawBlendMode(DX_BLENDMODE_ADD, 144);
+        SetDrawBlendMode(DX_BLENDMODE_ADD, 144*(fabs(cosf(blinkRad * DX_PI_F))));
         DrawExtendGraph(0, 0, 1920, 1080, gaussScreen, false);
 
         SetDrawBlendMode(DX_BLENDMODE_NOBLEND, 255);
