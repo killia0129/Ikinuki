@@ -16,6 +16,11 @@ private:
     VECTOR midPos;
     VECTOR endPos;
     const float LineLength = 3.0f;
+    const float LineSpeed = 1.5f;
+    void StraightUpdate(float deltaTime);
+    void CurveHiUpdate(float deltaTime);
+    void CurveLowUpdate(float deltaTime);
+    void StrayLightUpdate(float deltaTime);
 
     enum LINE_TYPE
     {

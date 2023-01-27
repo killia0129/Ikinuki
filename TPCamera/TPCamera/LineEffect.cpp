@@ -65,3 +65,30 @@ void LineEffect::Update(float deltaTime)
 void LineEffect::Draw()
 {
 }
+
+void LineEffect::StraightUpdate(float deltaTime)
+{
+    pos.z -= LineSpeed * deltaTime;
+    midPos.z -= LineSpeed * deltaTime;
+    endPos.z -= LineSpeed * deltaTime;
+}
+
+void LineEffect::CurveHiUpdate(float deltaTime)
+{
+    if (rand() % 500 == 0&&curvedFlag==false)
+    {
+        curvingFlag = true;
+    }
+    if (curvingFlag && !curvedFlag)
+    {
+        //Ç±Ç±çÏÇ¡ÇƒÇÈ
+    }
+}
+
+void LineEffect::CurveLowUpdate(float deltaTime)
+{
+}
+
+void LineEffect::StrayLightUpdate(float deltaTime)
+{
+}
