@@ -12,7 +12,14 @@ private:
     bool endFlag;
     bool curvingFlag;
     bool curvedFlag;
+    int curveType;
     VECTOR midPos;
     VECTOR endPos;
+    const float LineLength = 3.0f;
+
+    enum LINE_TYPE
+    {
+        STRAIGHT,CURVE_HI,CURVE_LOW,STRAYLIGHT
+    };
 };
 
