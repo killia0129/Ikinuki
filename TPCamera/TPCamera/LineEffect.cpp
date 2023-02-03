@@ -76,7 +76,7 @@ void LineEffect::Update(float deltaTime)
         break;
 
     case STRAYLIGHT:
-        StraightUpdate(deltaTime);
+        StrayLightUpdate(deltaTime);
         break;
 
     default:
@@ -92,17 +92,31 @@ void LineEffect::Update(float deltaTime)
 
 void LineEffect::Draw()
 {
-    SetDrawBlendMode(DX_BLENDMODE_ALPHA, 96);
-    DrawLine3D(pos, midPos, GetColor(0, 255, 0));
-    DrawLine3D(midPos, endPos, GetColor(0, 255, 0));
+    SetDrawBlendMode(DX_BLENDMODE_ALPHA, 80);
+    if (curveType == STRAIGHT)
+    {
+        //DrawSphere3D(pos, 5.0f, 0, GetColor(0, 255, 0), GetColor(0, 255, 0), false);
+        DrawCone3D(pos, midPos, 7.5f, 16, GetColor(0, 255, 0), GetColor(0, 255, 0), false);
+    }
+    else
+    {
+        DrawLine3D(pos, midPos, GetColor(0, 255, 0));
+        DrawLine3D(midPos, endPos, GetColor(0, 255, 0));
+        if (curveType == STRAYLIGHT)
+        {
+            DrawLine3D(pos, endPos, GetColor(0, 255, 0));
+        }
+    }
     SetDrawBlendMode(DX_BLENDMODE_NOBLEND, 255);
 }
 
 void LineEffect::StraightUpdate(float deltaTime)
 {
     pos.z -= LineSpeed * deltaTime;
-    midPos.z -= LineSpeed * deltaTime;
+    //midPos.z -= LineSpeed * deltaTime;
     endPos.z -= LineSpeed * deltaTime;
+    midPos = pos;
+    midPos.x -= 0.01f;
 }
 
 void LineEffect::CurveHiUpdate(float deltaTime)
@@ -209,17 +223,21 @@ void LineEffect::StrayLightUpdate(float deltaTime)
     float randF;
     randI = rand() % 10;
     randF = (float)randI / 10.0f;
-    pos.z -= LineSpeed * deltaTime * sinf(randF);
-    endPos.z -= LineSpeed * deltaTime * sinf(randF);
+    pos.z -= LineSpeed * deltaTime*cosf(randF);
+    //endPos.z -= LineSpeed * deltaTime * cosf(randF / 2.0f);
     if (randI % 2 == 0)
     {
-        pos.y += LineSpeed * deltaTime * (1.0f - sinf(randF));
-        endPos.y += LineSpeed * deltaTime * (1.0f - sinf(randF));
+        pos.y += 100.0f * deltaTime * (1.0f - sinf(randF*DX_PI_F));
+        //endPos.y += 100.0f * deltaTime * (1.0f - sinf(randF));
     }
     else
     {
-        pos.y -= LineSpeed * deltaTime * (1.0f - sinf(randF));
-        endPos.y -= LineSpeed * deltaTime * (1.0f - sinf(randF));
+        pos.y -= 100.0f * deltaTime * (1.0f - sinf(randF* DX_PI_F));
+        //endPos.y -= 100.0f * deltaTime * (1.0f - sinf(randF));
     }
     midPos = pos;
+    midPos.y -= 10.0f * cosf(DX_PI_F / 3.0f);
+    midPos.z -= 10.0f * sinf(DX_PI_F / 3.0f);
+    endPos = midPos;
+    endPos.z += 10.0f;
 }

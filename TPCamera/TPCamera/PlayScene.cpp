@@ -398,7 +398,7 @@ float PlayScene::ALL()
         SetDrawMode(DX_DRAWMODE_ANISOTROPIC);
         SetDrawBlendMode(DX_BLENDMODE_ADD, 255 * (fabs(cosf(blinkRad*DX_PI_F))));
         DrawExtendGraph(0, 0, 1920, 1080, gaussScreen, false);
-        SetDrawBlendMode(DX_BLENDMODE_ADD, 255*(fabs(cosf(blinkRad * DX_PI_F))));
+        SetDrawBlendMode(DX_BLENDMODE_ADD, 128*(fabs(cosf(blinkRad * DX_PI_F))));
         DrawExtendGraph(0, 0, 1920, 1080, gaussScreen, false);
 
         SetDrawBlendMode(DX_BLENDMODE_NOBLEND, 255);
@@ -408,13 +408,27 @@ float PlayScene::ALL()
         if (deleteCount >= 30)
         {
             float num = 0.0f;
-            while (num <= 1100.0f)
+            float _nowCount;
+            float _previousCount = GetNowCount();
+            while (num <= 2.0f)
             {
-                DrawBox(0, 0, 1920, num, GetColor(0, 0, 0), true);
-                num += 4.0f;
+                ClearDrawScreen();
+                _nowCount = GetNowCount();
+                DrawBox(0, 0, 1920, 1080, GetColor(255, 0, 0), true);
+                num += (float)(_nowCount - _previousCount)/1000.0f;
+                if (num <= 1.0f)
+                {
+                    SetDrawBlendMode(DX_BLENDMODE_ALPHA, 255 * num / 1.0f);
+                }
+                else
+                {
+                    SetDrawBlendMode(DX_BLENDMODE_ALPHA, 255 * (2.0f-num) / 1.0f);
+                }
+                _previousCount = GetNowCount();
                 ScreenFlip();
             }
             //WaitTimer(1000);
+            SetDrawBlendMode(DX_BLENDMODE_NOBLEND, 255);
             return count;
         }
 

@@ -47,7 +47,7 @@ float TitleScene::ALL()
 
         if (lineCool > 0.3f)
         {
-            for (int i = 0; i < 50; i++)
+            for (int i = 0; i < 100; i++)
             {
                 EntryLine();
             }
@@ -153,6 +153,7 @@ float TitleScene::ALL()
         SetDrawBlendMode(DX_BLENDMODE_NOBLEND, 255);
         SetDrawMode(DX_DRAWMODE_ANISOTROPIC);
 
+        //DrawFormatString(10, 10, GetColor(255, 255, 255), "%3.2f", 1.0f / deltaTime);
 
         if (CheckHitKey(KEY_INPUT_ESCAPE))
         {
