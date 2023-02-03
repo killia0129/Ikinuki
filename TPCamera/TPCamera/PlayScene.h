@@ -10,6 +10,7 @@
 #include"UI.h"
 #include"Beam.h"
 #include"BossScene.h"
+#include"LineEffect.h"
 
 class PlayScene
 {
@@ -28,18 +29,22 @@ private:
 	std::vector<ObstructBase*>obstructs;
 	std::vector<Exprosion*>expro;
 	std::vector<Particle*>particle;
+	std::vector<LineEffect*>lineEff;
 	int nowTime;
 	int previousTime;
 	void Entry();
 	void EntryExp(VECTOR _pos);
+	void EntryLine();
 	void ObsDelete(ObstructBase* deleteObs);
 	void ExpDelete(Exprosion* deleteExp);
 	void PartDelete(Particle* deletePart);
+	void LineDelete(LineEffect* deleteLine);
 	VECTOR cell[4][4];
 	unsigned int seed;
 	float count;
 	float obsCool;
 	float beamCool;
+	float lineCool;
 	float deltaTime;
 	int deleteCount;
 	float time;

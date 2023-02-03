@@ -15,6 +15,7 @@ PlayScene::PlayScene()
     count = 0.0f;
     obsCool = 0.0f;
     beamCool = 0.0f;
+    lineCool = 0.0f;
     deltaTime = 0.0f;
     deleteCount = 0;
     time = 45.0f;
@@ -53,6 +54,7 @@ float PlayScene::ALL()
         deltaTime = (float)(nowTime - previousTime) / 1000.0f;
         count += deltaTime;
         obsCool += deltaTime;
+        lineCool += deltaTime;
         time -= deltaTime;
         if (deleteCount >= 10)//Œã‚Å•Ï‚¦‚é
         {
@@ -64,6 +66,15 @@ float PlayScene::ALL()
         SetCameraPositionAndTarget_UpVecY(VGet(0, 0, 0), VGet(0.0f, 0.0f, 250.0f));
 
         srand(seed);
+
+        if (lineCool >= 0.3f)
+        {
+            for (int i = 0; i < 50; i++)
+            {
+                EntryLine();
+            }
+            lineCool = 0.0f;
+        }
 
         if (fase == NORMAL)
         {
@@ -154,6 +165,10 @@ float PlayScene::ALL()
             {
                 ptr->setDead(true);
             }
+        }
+        for (auto ptr : lineEff)
+        {
+            ptr->Update(deltaTime);
         }
         if (plusSec == 1)
         {
@@ -255,9 +270,9 @@ float PlayScene::ALL()
                 time -= 3.0f;
             }
         }
-        for (auto _ptr : particle)
+        for (auto ptr : particle)
         {
-            _ptr->Update(deltaTime);
+            ptr->Update(deltaTime);
         }
         for (auto ptr : expro)
         {
@@ -272,7 +287,10 @@ float PlayScene::ALL()
         {
             if (ptr->isDead())
             {
-                EntryExp(ptr->posGetter());
+                if (ptr->posGetter().z > 10.0f)
+                {
+                    EntryExp(ptr->posGetter());
+                }
                 deadObs.emplace_back(ptr);
             }
         }
@@ -293,6 +311,14 @@ float PlayScene::ALL()
                 deadPart.emplace_back(ptr);
             }
         }
+        std::vector<LineEffect*>deadLine;
+        for (auto ptr : lineEff)
+        {
+            if (ptr->IsEnd())
+            {
+                deadLine.emplace_back(ptr);
+            }
+        }
 
 
         for (auto ptr : deadObs)
@@ -307,10 +333,17 @@ float PlayScene::ALL()
         {
             PartDelete(ptr);
         }
+        for (auto ptr : deadLine)
+        {
+            LineDelete(ptr);
+        }
 
 
 
-
+        for (auto ptr : lineEff)
+        {
+            ptr->Draw();
+        }
         stage->Draw();
         aim->Draw(false);
         for (auto ptr : expro)
@@ -365,11 +398,12 @@ float PlayScene::ALL()
         SetDrawMode(DX_DRAWMODE_ANISOTROPIC);
         SetDrawBlendMode(DX_BLENDMODE_ADD, 255 * (fabs(cosf(blinkRad*DX_PI_F))));
         DrawExtendGraph(0, 0, 1920, 1080, gaussScreen, false);
-        SetDrawBlendMode(DX_BLENDMODE_ADD, 144*(fabs(cosf(blinkRad * DX_PI_F))));
+        SetDrawBlendMode(DX_BLENDMODE_ADD, 255*(fabs(cosf(blinkRad * DX_PI_F))));
         DrawExtendGraph(0, 0, 1920, 1080, gaussScreen, false);
 
         SetDrawBlendMode(DX_BLENDMODE_NOBLEND, 255);
         SetDrawMode(DX_DRAWMODE_ANISOTROPIC);
+
 
         if (deleteCount >= 30)
         {
@@ -440,6 +474,12 @@ void PlayScene::EntryExp(VECTOR pos)
     expro.emplace_back(newObj);
 }
 
+void PlayScene::EntryLine()
+{
+    LineEffect* newObj = new LineEffect();
+    lineEff.emplace_back(newObj);
+}
+
 void PlayScene::ObsDelete(ObstructBase* deleteObs)
 {
     auto iter = std::find(obstructs.begin(), obstructs.end(), deleteObs);
@@ -467,5 +507,15 @@ void PlayScene::PartDelete(Particle* deletePart)
     {
         std::iter_swap(iter, particle.end() - 1);
         particle.pop_back();
+    }
+}
+
+void PlayScene::LineDelete(LineEffect* deleteLine)
+{
+    auto iter = std::find(lineEff.begin(), lineEff.end(), deleteLine);
+    if (iter != lineEff.end())
+    {
+        std::iter_swap(iter, lineEff.end() - 1);
+        lineEff.pop_back();
     }
 }

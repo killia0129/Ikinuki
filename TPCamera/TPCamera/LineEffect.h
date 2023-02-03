@@ -7,6 +7,7 @@ public:
     virtual ~LineEffect();
     void Update(float deltaTime);
     void Draw();
+    bool IsEnd() { return endFlag; }
 
 private:
     bool endFlag;
@@ -15,8 +16,8 @@ private:
     int curveType;
     VECTOR midPos;
     VECTOR endPos;
-    const float LineLength = 3.0f;
-    const float LineSpeed = 1.5f;
+    const float LineLength = 20.0f;
+    const float LineSpeed = 500.0f;
     void StraightUpdate(float deltaTime);
     void CurveHiUpdate(float deltaTime);
     void CurveLowUpdate(float deltaTime);

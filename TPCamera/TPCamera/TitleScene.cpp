@@ -6,6 +6,7 @@ TitleScene::TitleScene()
     deltaTime = 0.0f;
     previousTime = 0;
     obsCool = 2.5f;
+    lineCool = 0.0f;
     seed = 0;
     for (int i = 0; i < 4; i++)
     {
@@ -34,6 +35,7 @@ float TitleScene::ALL()
         nowTime = GetNowCount();
         deltaTime = (float)(nowTime - previousTime) / 1000.0f;
         obsCool += deltaTime;
+        lineCool += deltaTime;
         //AddSpeed(deltaTime);
 
 
@@ -43,6 +45,14 @@ float TitleScene::ALL()
         SetCameraPositionAndTarget_UpVecY(VGet(0, 0, 0), VGet(0.0f, 0.0f, 250.0f));
 
 
+        if (lineCool > 0.3f)
+        {
+            for (int i = 0; i < 50; i++)
+            {
+                EntryLine();
+            }
+            lineCool = 0.0f;
+        }
         if (obsCool > 2.5f)
         {
             Entry();
@@ -53,7 +63,7 @@ float TitleScene::ALL()
         {
             seed = 0;
         }
-        previousTime = nowTime;
+
 
 
 
@@ -70,6 +80,10 @@ float TitleScene::ALL()
             {
                 ptr->setDead(true);
             }
+        }
+        for (auto ptr : lineEff)
+        {
+            ptr->Update(deltaTime);
         }
 
        
@@ -89,9 +103,26 @@ float TitleScene::ALL()
             ObsDelete(ptr);
         }
 
+        std::vector<LineEffect*>deadLine;
+        for (auto ptr : lineEff)
+        {
+            if (ptr->IsEnd())
+            {
+                deadLine.emplace_back(ptr);
+            }
+        }
+        for (auto ptr : deadLine)
+        {
+            LineDelete(ptr);
+        }
 
 
 
+
+        for (auto ptr : lineEff)
+        {
+            ptr->Draw();
+        }
         stage->Draw();
         for (auto ptr : obstructs)
         {
@@ -104,6 +135,7 @@ float TitleScene::ALL()
         SetFontSize(40);
         DrawFormatString(600, 400, GetColor(0, 255, 0), "L-Stick : MOVE  R-Stick : Aim");
 
+
         GraphFilterBlt(colorScreen, DownScaleScreen, DX_GRAPH_FILTER_DOWN_SCALE, 2);
         GraphFilterBlt(DownScaleScreen, gaussScreen, DX_GRAPH_FILTER_GAUSS, 32, 1500);
         SetDrawScreen(gaussScreen);
@@ -112,6 +144,8 @@ float TitleScene::ALL()
         DrawGraph(0, 0, colorScreen, false);
         SetDrawMode(DX_DRAWMODE_BILINEAR);
         SetDrawBlendMode(DX_BLENDMODE_ADD, 255);
+        DrawExtendGraph(0, 0, 1920, 1080, gaussScreen, false);
+        SetDrawBlendMode(DX_BLENDMODE_ADD, 128);
         DrawExtendGraph(0, 0, 1920, 1080, gaussScreen, false);
         //SetDrawBlendMode(DX_BLENDMODE_ADD, 169);
         //DrawExtendGraph(0, 0, 1920, 1080, gaussScreen, false);
@@ -129,6 +163,8 @@ float TitleScene::ALL()
         {
             return -1.0f;
         }
+
+        previousTime = nowTime;
 
         ScreenFlip();
     }
@@ -172,5 +208,21 @@ void TitleScene::ObsDelete(ObstructBase* deleteObs)
     {
         std::iter_swap(iter, obstructs.end() - 1);
         obstructs.pop_back();
+    }
+}
+
+void TitleScene::EntryLine()
+{
+    LineEffect* newObj = new LineEffect();
+    lineEff.emplace_back(newObj);
+}
+
+void TitleScene::LineDelete(LineEffect* deleteLine)
+{
+    auto iter = std::find(lineEff.begin(), lineEff.end(), deleteLine);
+    if (iter != lineEff.end())
+    {
+        std::iter_swap(iter, lineEff.end() - 1);
+        lineEff.pop_back();
     }
 }
