@@ -129,11 +129,11 @@ float TitleScene::ALL()
             ptr->Draw();
         }
 
-        DrawFormatString(675, 50, GetColor(0, 255, 0), "Press ENTER to Start");
+        DrawFormatString(740, 50, GetColor(0, 255, 0), "Press B to Start");
         SetFontSize(125);
         DrawFormatString(350, 175, GetColor(0, 255, 0), "EndLess BEAMer");
         SetFontSize(40);
-        DrawFormatString(600, 400, GetColor(0, 255, 0), "L-Stick : MOVE  R-Stick : Aim");
+        DrawFormatString(570, 400, GetColor(0, 255, 0), "L-Stick : MOVE  R-Stick : Aim");
 
 
         GraphFilterBlt(colorScreen, DownScaleScreen, DX_GRAPH_FILTER_DOWN_SCALE, 2);
