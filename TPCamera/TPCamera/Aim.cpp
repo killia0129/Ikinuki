@@ -9,6 +9,11 @@ Aim::Aim()
 	farSquare = VGet(0, 0, 140);
 	playerPos = VGet(0, 0, 30);
 	lineLast = VGet(0, 0, 530);
+	for (int i = 0; i < 16; i++)
+	{
+		prevPlayerPos[i] = playerPos;
+		prevLineLast[i] = lineLast;
+	}
 	mousePointX = 0;
 	mousePointY = 0;
 	/*GetMousePoint(&mousePointX, &mousePointY);
@@ -25,6 +30,13 @@ Aim::~Aim()
 
 void Aim::Update(float deltaTime, VECTOR pPos)
 {
+	for (int i = 15; i >= 1; i--)
+	{
+		prevPlayerPos[i] = prevPlayerPos[i - 1];
+		prevLineLast[i] = prevLineLast[i - 1];
+	}
+	prevPlayerPos[0] = playerPos;
+	prevLineLast[0] = lineLast;
 	playerPos = pPos;
 	GetMousePoint(&mousePointX, &mousePointY);
 	//SetMousePoint(1920 / 2, 1080 / 2);
@@ -122,8 +134,19 @@ void Aim::Draw(bool lockFlag)
 		VGet(farSquare.x + aimR * sinf(2.0f * DX_PI_F / 3.0f), farSquare.y + aimR * cosf(2.0f * DX_PI_F / 3.0f), farSquare.z),
 		VGet(farSquare.x + aimR * sinf(4.0f * DX_PI_F / 3.0f), farSquare.y + aimR * cosf(4.0f * DX_PI_F / 3.0f), farSquare.z),
 		color, false);
+
+	for (int i = 0; i < 16; i++)
+	{
+		SetDrawBlendMode(DX_BLENDMODE_ALPHA, 128 - 8 * i);
+		DrawCapsule3D(prevPlayerPos[i], prevLineLast[i], 0.5f, 4, GetColor(10, 10, 255), GetColor(10, 10, 255), true);
+	}
+
+	SetDrawBlendMode(DX_BLENDMODE_NOBLEND, 255);
+
 	DrawCapsule3D(playerPos, lineLast, 0.5f, 4, GetColor(42, 255, 255), GetColor(42, 255, 255), true);
 	DrawCapsule3D(playerPos, lineLast, 0.45f, 1, lockedColor,lockedColor, false);
+
+
 	DrawSphere3D(aimMark, 1.0f, 16, lockedColor, lockedColor, true);
 	DrawLine3D(aimMark, VGet(aimMark.x, -20.0f, aimMark.z), lockedColor);
 	DrawLine3D( VGet(-20.0f, -20.0f, aimMark.z), VGet(20.0f, -20.0f, aimMark.z),lockedColor);

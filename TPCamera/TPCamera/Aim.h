@@ -17,6 +17,8 @@ private:
 	VECTOR aimMark;
 	VECTOR playerPos;
 	VECTOR lineLast;
+	VECTOR prevPlayerPos[16];
+	VECTOR prevLineLast[16];
 	unsigned int color;
 	unsigned int normalColor;
 	unsigned int lockedColor;
