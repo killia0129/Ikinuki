@@ -26,6 +26,7 @@ TitleScene::~TitleScene()
 
 float TitleScene::ALL()
 {
+    XINPUT_STATE padInput;
     while (1)
     {
         SetDrawScreen(colorScreen);
@@ -38,6 +39,7 @@ float TitleScene::ALL()
         lineCool += deltaTime;
         //AddSpeed(deltaTime);
 
+        GetJoypadXInputState(DX_INPUT_KEY_PAD1, &padInput);
 
         srand(seed);
 
@@ -160,7 +162,7 @@ float TitleScene::ALL()
             return -2.0f;
         }
 
-        if (CheckHitKey(KEY_INPUT_RETURN))
+        if (CheckHitKey(KEY_INPUT_RETURN) || padInput.Buttons[XINPUT_BUTTON_B] != 0)
         {
             return -1.0f;
         }

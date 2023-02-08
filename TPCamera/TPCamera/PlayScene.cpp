@@ -409,20 +409,60 @@ float PlayScene::ALL()
         {
             float num = 0.0f;
             float _nowCount;
+            SetCameraPositionAndTarget_UpVecY(VGet(0, 0, 0), VGet(0.0f, 0.0f, 250.0f));
             float _previousCount = GetNowCount();
             while (num <= 2.0f)
             {
                 ClearDrawScreen();
                 _nowCount = GetNowCount();
-                DrawBox(0, 0, 1920, 1080, GetColor(255, 0, 0), true);
-                num += (float)(_nowCount - _previousCount)/1000.0f;
+
                 if (num <= 1.0f)
                 {
+                    for (auto ptr : lineEff)
+                    {
+                        ptr->Draw();
+                    }
+                    stage->Draw();
+                    aim->Draw(false);
+                    for (auto ptr : expro)
+                    {
+                        ptr->Draw();
+                    }
+                    player->Draw();
+                    for (auto ptr : obstructs)
+                    {
+                        ptr->Draw();
+                    }
+
+                    for (auto ptr : particle)
+                    {
+                        ptr->Draw();
+                    }
+
+                    if (plusSec != 0)
+                    {
+                        SetFontSize(20);
+                        DrawString(plusSecX, plusSecY, "+10.0s", GetColor(255, 255, 255));
+                        SetFontSize(40);
+                    }
+
+                    for (auto ptr : beam)
+                    {
+                        ptr->Draw();
+                    }
+
+                    ui->Draw();
+                    
+                    num += (float)(_nowCount - _previousCount) / 100.0f;
                     SetDrawBlendMode(DX_BLENDMODE_ALPHA, 255 * num / 1.0f);
+                    DrawBox(0, 0, 1920, 1080, GetColor(42, 255, 255), true);
                 }
                 else
                 {
+                    num += (float)(_nowCount - _previousCount) / 1000.0f;
                     SetDrawBlendMode(DX_BLENDMODE_ALPHA, 255 * (2.0f-num) / 1.0f);
+                    DrawBox(0, 0, 1920, 1080, GetColor(42, 255, 255), true);
+                   
                 }
                 _previousCount = GetNowCount();
                 ScreenFlip();
@@ -435,12 +475,67 @@ float PlayScene::ALL()
         if (time < 0)
         {
             float num = 0.0f;
-            while (num <= 1100.0f)
+            float _nowCount;
+            SetCameraPositionAndTarget_UpVecY(VGet(0, 0, 0), VGet(0.0f, 0.0f, 250.0f));
+            float _previousCount = GetNowCount();
+            while (num <= 2.0f)
             {
-                DrawBox(0, 0, 1920, num, GetColor(0, 0, 0), true);
-                num += 4.0f;
+                ClearDrawScreen();
+                _nowCount = GetNowCount();
+
+                if (num <= 1.0f)
+                {
+                    for (auto ptr : lineEff)
+                    {
+                        ptr->Draw();
+                    }
+                    stage->Draw();
+                    aim->Draw(false);
+                    for (auto ptr : expro)
+                    {
+                        ptr->Draw();
+                    }
+                    player->Draw();
+                    for (auto ptr : obstructs)
+                    {
+                        ptr->Draw();
+                    }
+
+                    for (auto ptr : particle)
+                    {
+                        ptr->Draw();
+                    }
+
+                    if (plusSec != 0)
+                    {
+                        SetFontSize(20);
+                        DrawString(plusSecX, plusSecY, "+10.0s", GetColor(255, 255, 255));
+                        SetFontSize(40);
+                    }
+
+                    for (auto ptr : beam)
+                    {
+                        ptr->Draw();
+                    }
+
+                    ui->Draw();
+
+                    num += (float)(_nowCount - _previousCount) / 1000.0f;
+                    SetDrawBlendMode(DX_BLENDMODE_ALPHA, 255 * num / 1.0f);
+                    DrawBox(0, 0, 1920, 1080, GetColor(255, 0, 0), true);
+                }
+                else
+                {
+                    num += (float)(_nowCount - _previousCount) / 1000.0f;
+                    SetDrawBlendMode(DX_BLENDMODE_ALPHA, 255 * (2.0f - num) / 1.0f);
+                    DrawBox(0, 0, 1920, 1080, GetColor(255, 0, 0), true);
+
+                }
+                _previousCount = GetNowCount();
                 ScreenFlip();
             }
+            //WaitTimer(1000);
+            SetDrawBlendMode(DX_BLENDMODE_NOBLEND, 255);
             //WaitTimer(1000);
             return -4.0f;
         }

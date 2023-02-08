@@ -18,5 +18,7 @@ private:
     int HP;
     Move move;
     InputMove input;
+    VECTOR prevPos[16];
+    void SetDrawPoint(VECTOR _pos);
 };
 

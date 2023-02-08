@@ -35,6 +35,8 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine
 	AddFontResourceEx(font, FR_PRIVATE, NULL);
 	ChangeFont("Arcade", DX_CHARSET_DEFAULT);
 
+	XINPUT_STATE padInput;
+
 	SetFontSize(40);
 
 	while (loop)
@@ -57,9 +59,11 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine
 			break;
 		}
 		delete playScene;
+		GetJoypadXInputState(DX_INPUT_KEY_PAD1, &padInput);
 		while (!CheckHitKey(KEY_INPUT_SPACE))
 		{
 			ClearDrawScreen();
+			GetJoypadXInputState(DX_INPUT_KEY_PAD1, &padInput);
 			if (score >= 0.0f)
 			{
 				if (redValue == 0)
@@ -99,23 +103,28 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine
 				DrawFormatString(750, 400, GetColor(redValue, greenValue, blueValue), "CLEAR!");
 				DrawFormatString(200, 500, GetColor(0, 255, 0), "TIME : %4.3f seconds", score);
 				SetFontSize(50);
-				DrawFormatString(600, 600, GetColor(0, 255, 0), "Press SPACE to Retry");
+				DrawFormatString(650, 600, GetColor(0, 255, 0), "Press A to Retry");
 				SetFontSize(40);
 			}
 
 			if (score < 0.0f)
 			{
+				GetJoypadXInputState(DX_INPUT_KEY_PAD1, &padInput);
 				SetFontSize(100);
 				DrawFormatString(600, 300, GetColor(0, 255, 0), "GAME OVER!");
 				DrawFormatString(250, 500, GetColor(0, 255, 0), " %d Objects Remaining", 30 - deleted);
 				SetFontSize(50);
-				DrawFormatString(600, 700, GetColor(0, 255, 0), "Press SPACE to Retry");
+				DrawFormatString(650, 700, GetColor(0, 255, 0), "Press A to Retry");
 				SetFontSize(40);
 			}
 
 			if (CheckHitKey(KEY_INPUT_ESCAPE))
 			{
 				loop = false;
+				break;
+			}
+			if (padInput.Buttons[XINPUT_BUTTON_A] != 0)
+			{
 				break;
 			}
 			ScreenFlip();
