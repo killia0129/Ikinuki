@@ -23,10 +23,18 @@ BossScene::BossScene(VECTOR pos)
     bit2Rad = 0.25f;
     bit3Rad = 0.0f;
     bit4Rad = 0.0f;
-    bit1Pos = VGet(pos.x + (20.0f * cosf(bit1Rad * DX_PI_F) * cosf(0.25f * DX_PI_F)), pos.y + (20.0f * cosf(bit1Rad * DX_PI_F) * cosf(0.25f * DX_PI_F)), pos.z - (20 * sinf(bit1Rad * DX_PI_F)));
-    bit2Pos = VGet(pos.x - (20.0f * cosf(bit2Rad * DX_PI_F) * cosf(0.25f * DX_PI_F)), pos.y - (20.0f * cosf(bit2Rad * DX_PI_F) * cosf(0.25f * DX_PI_F)), pos.z + (20 * sinf(bit2Rad * DX_PI_F)));
+    bit1Pos = VGet(pos.x + (20.0f * cosf(bit1Rad * DX_PI_F) * cosf(0.25f * DX_PI_F)), pos.y + (20.0f * cosf(bit1Rad * DX_PI_F) * cosf(0.25f * DX_PI_F)), pos.z - (20.0f * sinf(bit1Rad * DX_PI_F)));
+    bit2Pos = VGet(pos.x - (20.0f * cosf(bit2Rad * DX_PI_F) * cosf(0.25f * DX_PI_F)), pos.y - (20.0f * cosf(bit2Rad * DX_PI_F) * cosf(0.25f * DX_PI_F)), pos.z + (20.0f * sinf(bit2Rad * DX_PI_F)));
     bit3Pos = VGet(pos.x + (20.0f * cosf(bit3Rad * DX_PI_F)), pos.y, pos.z + (20.0f * sinf(bit3Rad * DX_PI_F)));
     bit4Pos = VGet(pos.x, pos.y + (20.0f * cosf(bit4Rad * DX_PI_F)), pos.z - (20.0f * sinf(bit4Rad * DX_PI_F)));
+    needle1Pos= VGet(pos.x - (14.0f * cosf(bit1Rad * DX_PI_F) * cosf(0.25f * DX_PI_F)), pos.y - (14.0f * cosf(bit1Rad * DX_PI_F) * cosf(0.25f * DX_PI_F)), pos.z + (14.0f * sinf(bit1Rad * DX_PI_F)));
+    needle2Pos= VGet(pos.x + (14.0f * cosf(bit2Rad * DX_PI_F) * cosf(0.25f * DX_PI_F)), pos.y + (14.0f * cosf(bit2Rad * DX_PI_F) * cosf(0.25f * DX_PI_F)), pos.z - (14.0f * sinf(bit2Rad * DX_PI_F)));
+    needle3Pos= VGet(pos.x - (14.0f * cosf(bit3Rad * DX_PI_F)), pos.y, pos.z - (14.0f * sinf(bit3Rad * DX_PI_F)));
+    needle4Pos = VGet(pos.x, pos.y - (14.0f * cosf(bit4Rad * DX_PI_F)), pos.z + (14.0f * sinf(bit4Rad * DX_PI_F)));
+    needleTop1Pos = VGet(pos.x - (25.0f * cosf(bit1Rad * DX_PI_F) * cosf(0.25f * DX_PI_F)), pos.y - (25.0f * cosf(bit1Rad * DX_PI_F) * cosf(0.25f * DX_PI_F)), pos.z + (25.0f * sinf(bit1Rad * DX_PI_F)));
+    needleTop2Pos = VGet(pos.x + (25.0f * cosf(bit2Rad * DX_PI_F) * cosf(0.25f * DX_PI_F)), pos.y + (25.0f * cosf(bit2Rad * DX_PI_F) * cosf(0.25f * DX_PI_F)), pos.z - (25.0f * sinf(bit2Rad * DX_PI_F)));
+    needleTop3Pos = VGet(pos.x - (25.0f * cosf(bit3Rad * DX_PI_F)), pos.y, pos.z - (25.0f * sinf(bit3Rad * DX_PI_F)));
+    needleTop4Pos = VGet(pos.x, pos.y - (25.0f * cosf(bit4Rad * DX_PI_F)), pos.z + (25.0f * sinf(bit4Rad * DX_PI_F)));
 }
 
 BossScene::~BossScene()
@@ -103,6 +111,15 @@ void BossScene::Update(float deltaTime)
     bit2Pos = VGet(pos.x - (20.0f * cosf(bit2Rad * DX_PI_F) * cosf(0.25f * DX_PI_F)), pos.y + (20.0f * cosf(bit2Rad * DX_PI_F) * cosf(0.25f * DX_PI_F)), pos.z + (20 * sinf(bit2Rad * DX_PI_F)));
     bit3Pos = VGet(pos.x + (20.0f * cosf(bit3Rad * DX_PI_F)), pos.y, pos.z + (20.0f * sinf(bit3Rad * DX_PI_F)));
     bit4Pos = VGet(pos.x, pos.y + (20.0f * cosf(bit4Rad * DX_PI_F)), pos.z - (20.0f * sinf(bit4Rad * DX_PI_F)));
+    needle1Pos = VGet(pos.x - (14.0f * cosf(bit1Rad * DX_PI_F) * cosf(0.25f * DX_PI_F)), pos.y - (14.0f * cosf(bit1Rad * DX_PI_F) * cosf(0.25f * DX_PI_F)), pos.z + (14.0f * sinf(bit1Rad * DX_PI_F)));
+    needle2Pos = VGet(pos.x + (14.0f * cosf(bit2Rad * DX_PI_F) * cosf(0.25f * DX_PI_F)), pos.y + (14.0f * cosf(bit2Rad * DX_PI_F) * cosf(0.25f * DX_PI_F)), pos.z - (14.0f * sinf(bit2Rad * DX_PI_F)));
+    needle3Pos = VGet(pos.x - (14.0f * cosf(bit3Rad * DX_PI_F)), pos.y, pos.z - (14.0f * sinf(bit3Rad * DX_PI_F)));
+    needle4Pos = VGet(pos.x, pos.y - (14.0f * cosf(bit4Rad * DX_PI_F)), pos.z + (14.0f * sinf(bit4Rad * DX_PI_F)));
+    needleTop1Pos= VGet(pos.x - (25.0f * cosf(bit1Rad * DX_PI_F) * cosf(0.25f * DX_PI_F)), pos.y - (25.0f * cosf(bit1Rad * DX_PI_F) * cosf(0.25f * DX_PI_F)), pos.z + (25.0f * sinf(bit1Rad * DX_PI_F)));
+    needleTop2Pos= VGet(pos.x + (25.0f * cosf(bit2Rad * DX_PI_F) * cosf(0.25f * DX_PI_F)), pos.y + (25.0f * cosf(bit2Rad * DX_PI_F) * cosf(0.25f * DX_PI_F)), pos.z - (25.0f * sinf(bit2Rad * DX_PI_F)));
+    needleTop3Pos= VGet(pos.x - (25.0f * cosf(bit3Rad * DX_PI_F)), pos.y, pos.z - (25.0f * sinf(bit3Rad * DX_PI_F)));
+    needleTop4Pos= VGet(pos.x, pos.y - (25.0f * cosf(bit4Rad * DX_PI_F)), pos.z + (25.0f * sinf(bit4Rad * DX_PI_F)));
+
 
 
     ColorChanger();
@@ -118,19 +135,23 @@ void BossScene::Draw()
     for (int i = 0; i < 32; i++)
     {
         SetDrawBlendMode(DX_BLENDMODE_ALPHA, 64 - 2 * i);
-        DrawSphere3D(prevPos[i], mainR*((float)(32-(i/2))/32.0f), 16, Color, Color, true);
+        DrawSphere3D(prevPos[i], mainR * ((float)(32 - (i / 2)) / 32.0f), 16, Color, Color, true);
     }
     SetDrawBlendMode(DX_BLENDMODE_ALPHA, 128);
     DrawSphere3D(pos, mainR, 16, Color, Color, true);
-    DrawSphere3D(bit2Pos, 2.0f, 8, Color, Color, false);
-    DrawSphere3D(bit3Pos, 2.0f, 8, Color, Color, false);
-    DrawSphere3D(bit4Pos, 2.0f, 8, Color, Color, false);
-    DrawSphere3D(bit1Pos, 2.0f, 8, Color, Color, false);
     SetDrawBlendMode(DX_BLENDMODE_NOBLEND, 255);
     DrawSphere3D(pos, coreR, 16, Color, Color, true);
     SetDrawBlendMode(DX_BLENDMODE_NOBLEND, 255);
     DrawLine3D(line1Start, line1End, Color);
     DrawLine3D(line2Start, line2End, Color);
+    DrawSphere3D(bit1Pos, 2.0f, 8, Color, Color, false);
+    DrawSphere3D(bit2Pos, 2.0f, 8, Color, Color, false);
+    DrawSphere3D(bit3Pos, 2.0f, 8, Color, Color, false);
+    DrawSphere3D(bit4Pos, 2.0f, 8, Color, Color, false);
+    DrawCone3D(needleTop1Pos, needle1Pos, 4.0f, 8,Color, Color, true);
+    DrawCone3D(needleTop2Pos, needle2Pos, 4.0f, 8, Color, Color, true);
+    DrawCone3D(needleTop3Pos, needle3Pos, 4.0f, 8, Color, Color, true);
+    DrawCone3D(needleTop4Pos, needle4Pos, 4.0f, 8, Color, Color, true);
     DrawLine3D(pos, VGet(pos.x, -20.0f, pos.z), Color);
 }
 
