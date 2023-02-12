@@ -22,6 +22,8 @@ private:
     float ySpeed;
     VECTOR line1Start, line1End;
     VECTOR line2Start, line2End;
+    VECTOR bit1Pos, bit2Pos, bit3Pos, bit4Pos;
+    float bit1Rad, bit2Rad, bit3Rad, bit4Rad;
     VECTOR prevPos[32];
     unsigned int Color;
     void ColorChanger();

@@ -19,6 +19,14 @@ BossScene::BossScene(VECTOR pos)
     line2End = VGet(pos.x - mainR * sinf(0.5f * DX_PI_F) * cosf((rad + 0.5f) * DX_PI_F), pos.y + mainR * cos(0.5f * DX_PI_F), pos.z - mainR * sinf(0.5f * DX_PI_F) * sinf((rad + 0.5f) * DX_PI_F));
     Color = GetColor(0, 255, 0);
     redColorValue = 0;
+    bit1Rad = 0.0f;
+    bit2Rad = 0.25f;
+    bit3Rad = 0.0f;
+    bit4Rad = 0.0f;
+    bit1Pos = VGet(pos.x + (20.0f * cosf(bit1Rad * DX_PI_F) * cosf(0.25f * DX_PI_F)), pos.y + (20.0f * cosf(bit1Rad * DX_PI_F) * cosf(0.25f * DX_PI_F)), pos.z - (20 * sinf(bit1Rad * DX_PI_F)));
+    bit2Pos = VGet(pos.x - (20.0f * cosf(bit2Rad * DX_PI_F) * cosf(0.25f * DX_PI_F)), pos.y - (20.0f * cosf(bit2Rad * DX_PI_F) * cosf(0.25f * DX_PI_F)), pos.z + (20 * sinf(bit2Rad * DX_PI_F)));
+    bit3Pos = VGet(pos.x + (20.0f * cosf(bit3Rad * DX_PI_F)), pos.y, pos.z + (20.0f * sinf(bit3Rad * DX_PI_F)));
+    bit4Pos = VGet(pos.x, pos.y + (20.0f * cosf(bit4Rad * DX_PI_F)), pos.z - (20.0f * sinf(bit4Rad * DX_PI_F)));
 }
 
 BossScene::~BossScene()
@@ -69,6 +77,34 @@ void BossScene::Update(float deltaTime)
     line2Start = VGet(pos.x - mainR * sinf(0.25f * DX_PI_F) * cosf((rad + 1.0f) * DX_PI_F), pos.y - mainR * cos(0.25f * DX_PI_F), pos.z - mainR * sinf(0.25f * DX_PI_F) * sinf((rad + 1.0f) * DX_PI_F));
     line2End = VGet(pos.x + mainR * sinf(0.25f * DX_PI_F) * cosf((rad + 1.0f) * DX_PI_F), pos.y + mainR * cos(0.25f * DX_PI_F), pos.z + mainR * sinf(0.25f * DX_PI_F) * sinf((rad + 1.0f) * DX_PI_F));
 
+
+    bit1Rad += 0.75f * deltaTime;
+    bit2Rad += 1.0f * deltaTime;
+    bit3Rad += 0.5f * deltaTime;
+    bit4Rad += 1.25 * deltaTime;
+    if (bit1Rad > 2.0f)
+    {
+        bit1Rad = 0.0f;
+    }
+    if (bit2Rad > 2.0f)
+    {
+        bit2Rad = 0.0f;
+    }
+    if (bit3Rad > 2.0f)
+    {
+        bit3Rad = 0.0f;
+    }
+    if (bit3Rad > 2.0f)
+    {
+        bit3Rad = 0.0f;
+    }
+
+    bit1Pos = VGet(pos.x + (20.0f * cosf(bit1Rad * DX_PI_F) * cosf(0.25f * DX_PI_F)), pos.y + (20.0f * cosf(bit1Rad * DX_PI_F) * cosf(0.25f * DX_PI_F)), pos.z - (20 * sinf(bit1Rad * DX_PI_F)));
+    bit2Pos = VGet(pos.x - (20.0f * cosf(bit2Rad * DX_PI_F) * cosf(0.25f * DX_PI_F)), pos.y + (20.0f * cosf(bit2Rad * DX_PI_F) * cosf(0.25f * DX_PI_F)), pos.z + (20 * sinf(bit2Rad * DX_PI_F)));
+    bit3Pos = VGet(pos.x + (20.0f * cosf(bit3Rad * DX_PI_F)), pos.y, pos.z + (20.0f * sinf(bit3Rad * DX_PI_F)));
+    bit4Pos = VGet(pos.x, pos.y + (20.0f * cosf(bit4Rad * DX_PI_F)), pos.z - (20.0f * sinf(bit4Rad * DX_PI_F)));
+
+
     ColorChanger();
 
     if (HP <= 0.0f)
@@ -86,6 +122,10 @@ void BossScene::Draw()
     }
     SetDrawBlendMode(DX_BLENDMODE_ALPHA, 128);
     DrawSphere3D(pos, mainR, 16, Color, Color, true);
+    DrawSphere3D(bit2Pos, 2.0f, 8, Color, Color, false);
+    DrawSphere3D(bit3Pos, 2.0f, 8, Color, Color, false);
+    DrawSphere3D(bit4Pos, 2.0f, 8, Color, Color, false);
+    DrawSphere3D(bit1Pos, 2.0f, 8, Color, Color, false);
     SetDrawBlendMode(DX_BLENDMODE_NOBLEND, 255);
     DrawSphere3D(pos, coreR, 16, Color, Color, true);
     SetDrawBlendMode(DX_BLENDMODE_NOBLEND, 255);
