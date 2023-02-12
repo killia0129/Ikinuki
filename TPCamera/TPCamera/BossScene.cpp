@@ -86,10 +86,10 @@ void BossScene::Update(float deltaTime)
     line2End = VGet(pos.x + mainR * sinf(0.25f * DX_PI_F) * cosf((rad + 1.0f) * DX_PI_F), pos.y + mainR * cos(0.25f * DX_PI_F), pos.z + mainR * sinf(0.25f * DX_PI_F) * sinf((rad + 1.0f) * DX_PI_F));
 
 
-    bit1Rad += 0.75f * deltaTime;
-    bit2Rad += 1.0f * deltaTime;
-    bit3Rad += 0.5f * deltaTime;
-    bit4Rad += 1.25 * deltaTime;
+    bit1Rad += 1.5f * deltaTime;
+    bit2Rad += 2.0f * deltaTime;
+    bit3Rad += 1.0f * deltaTime;
+    bit4Rad += 2.5 * deltaTime;
     if (bit1Rad > 2.0f)
     {
         bit1Rad = 0.0f;

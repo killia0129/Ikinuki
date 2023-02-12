@@ -56,7 +56,7 @@ float PlayScene::ALL()
         obsCool += deltaTime;
         lineCool += deltaTime;
         time -= deltaTime;
-        if (deleteCount >= 10)//Œã‚Å•Ï‚¦‚é
+        if (deleteCount >= 10)
         {
             beamCool += deltaTime;
         }
