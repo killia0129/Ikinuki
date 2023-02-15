@@ -11,6 +11,7 @@
 #include"Beam.h"
 #include"BossScene.h"
 #include"LineEffect.h"
+#include"HowToPlay.h"
 
 class PlayScene
 {
@@ -26,6 +27,7 @@ private:
 	Aim* aim = new Aim();
 	UI* ui = new UI();
 	Beam* beam[4];
+	HowToPlay* howTo;
 	std::vector<ObstructBase*>obstructs;
 	std::vector<Exprosion*>expro;
 	std::vector<Particle*>particle;

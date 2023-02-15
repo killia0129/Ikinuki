@@ -33,6 +33,8 @@ PlayScene::PlayScene()
     DownScaleScreen = MakeScreen(1920 / 2, 1080 / 2, false);
     gaussScreen = MakeScreen(1920 / 2, 1080 / 2, false);
     blinkRad = 0.0f;
+    howTo = new HowToPlay();
+
     /*BossScene* boss = new BossScene(VGet(0, 0, 500));
     obstructs.emplace_back(boss);*/
 
@@ -78,11 +80,13 @@ float PlayScene::ALL()
 
         if (fase == NORMAL)
         {
-
-            if (obsCool > 3.0f)
+            if (howTo->isEnd())
             {
-                Entry();
-                obsCool = 0.0f;
+                if (obsCool > 3.0f)
+                {
+                    Entry();
+                    obsCool = 0.0f;
+                }
             }
         }
         if (fase == SETBOSS)
@@ -148,6 +152,10 @@ float PlayScene::ALL()
 
         
         //Update
+        if (!howTo->isEnd())
+        {
+            howTo->Update(deltaTime);
+        }
         for (auto ptr : obstructs)
         {
             ptr->Update(deltaTime);
@@ -351,6 +359,10 @@ float PlayScene::ALL()
             ptr->Draw();
         }
         player->Draw();
+        if (!howTo->isEnd())
+        {
+            howTo->Draw();
+        }
         for (auto ptr : obstructs)
         {
             ptr->Draw();
