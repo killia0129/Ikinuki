@@ -17,7 +17,7 @@ PlayScene::PlayScene()
     beamCool = 0.0f;
     lineCool = 0.0f;
     deltaTime = 0.0f;
-    deleteCount = 29;
+    deleteCount = 0;
     time = 45.0f;
     plusSec = 0;
     plusSecX = 0;

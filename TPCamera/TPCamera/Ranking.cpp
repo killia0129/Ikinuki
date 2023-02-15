@@ -39,7 +39,7 @@ void Ranking::CheckRanking(float score)
 
 void Ranking::saveRanking()
 {
-	saveTxt.open("Ranking/Ranking.txt", std::ios::trunc);
+	saveTxt.open("Ranking/Ranking.txt", std::ios::out);
 
 	for (int i = 0; i < 10; i++)
 	{
