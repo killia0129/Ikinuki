@@ -71,6 +71,6 @@ void HowToPlay::Draw()
 	}
 	if (rightFlag)
 	{
-		DrawString(420, 30, "AIM R-STICK", GetColor(0, 255, 0));
+		DrawString(430, 30, "AIM R-STICK", GetColor(0, 255, 0));
 	}
 }

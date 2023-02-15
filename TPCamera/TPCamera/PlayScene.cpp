@@ -17,7 +17,7 @@ PlayScene::PlayScene()
     beamCool = 0.0f;
     lineCool = 0.0f;
     deltaTime = 0.0f;
-    deleteCount = 0;
+    deleteCount = 29;
     time = 45.0f;
     plusSec = 0;
     plusSecX = 0;
@@ -421,6 +421,7 @@ float PlayScene::ALL()
         {
             float num = 0.0f;
             float _nowCount;
+
             SetCameraPositionAndTarget_UpVecY(VGet(0, 0, 0), VGet(0.0f, 0.0f, 250.0f));
             float _previousCount = GetNowCount();
             while (num <= 2.0f)

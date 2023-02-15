@@ -1,6 +1,7 @@
 #include<DxLib.h>
 #include "PlayScene.h"
 #include"TitleScene.h"
+#include"Ranking.h"
 
 
 int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine, int nCmdShow)
@@ -60,6 +61,12 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine
 		}
 		delete playScene;
 		GetJoypadXInputState(DX_INPUT_KEY_PAD1, &padInput);
+		Ranking* ranking = new Ranking();
+		if (score > 0.0f)
+		{
+			ranking->CheckRanking(score);
+			ranking->saveRanking();
+		}
 		while (!CheckHitKey(KEY_INPUT_SPACE))
 		{
 			ClearDrawScreen();
@@ -104,6 +111,7 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine
 				DrawFormatString(200, 500, GetColor(0, 255, 0), "TIME : %4.3f seconds", score);
 				SetFontSize(50);
 				DrawFormatString(650, 600, GetColor(0, 255, 0), "Press A to Retry");
+				ranking->Draw();
 				SetFontSize(40);
 			}
 
