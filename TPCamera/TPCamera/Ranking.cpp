@@ -51,11 +51,11 @@ void Ranking::saveRanking()
 void Ranking::Draw()
 {
 	SetFontSize(60);
-	DrawString(1500, 30, "Ranking", GetColor(0, 255, 0));
+	DrawString(1300, 30, "Ranking", GetColor(0, 255, 0));
 	SetFontSize(40);
 	for (int i = 0; i < 9; i++)
 	{
-		DrawFormatString(1550, 100 + (40 * i), GetColor( 0, 255, 0), "Rank %d  %f s", i + 1, rankingF[i]);
+		DrawFormatString(1300, 100 + (40 * i), GetColor( 0, 255, 0), "Rank %d  %f s", i + 1, rankingF[i]);
 	}
-	DrawFormatString(1550, 100 + (40 * 9), GetColor(0, 255, 0), "Rank %d %f s", 10, rankingF[9]);
+	DrawFormatString(1300, 100 + (40 * 9), GetColor(0, 255, 0), "Rank %d %f s", 10, rankingF[9]);
 }
