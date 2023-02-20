@@ -18,7 +18,7 @@ PlayScene::PlayScene()
     lineCool = 0.0f;
     deltaTime = 0.0f;
     deleteCount = 0;
-    time = 45.0f;
+    time = 60.0f;
     plusSec = 0;
     plusSecX = 0;
     plusSecY = 0;
@@ -118,7 +118,7 @@ float PlayScene::ALL()
             if (!faseMoving)
             {
                 fase = BOSS;
-                BossScene* boss = new BossScene(VGet(0.0f, 0.0f, 500.0f));
+                BossScene* boss = new BossScene(VGet(0.0f, 0.0f, 550.0f));
                 obstructs.emplace_back(boss);
             }
         }
@@ -232,7 +232,7 @@ float PlayScene::ALL()
             dis = sqrtf(dis);
             if (fase == NORMAL)
             {
-                if (dis < 3.0f && ptr->posGetter().z>10.0f)
+                if (dis < 4.0f && ptr->posGetter().z>10.0f)
                 {
                     ptr->GivenDmg(deltaTime);
                     Particle* newEffect = new Particle(ptr->posGetter());
@@ -259,7 +259,7 @@ float PlayScene::ALL()
             }
             if (fase == BOSS)
             {
-                if (dis <= 7.0f)
+                if (dis <= 8.5f)
                 {
                     ptr->GivenDmg(deltaTime);
                     Particle* newEffect = new Particle(ptr->posGetter());

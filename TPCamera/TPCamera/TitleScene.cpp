@@ -131,7 +131,8 @@ float TitleScene::ALL()
             ptr->Draw();
         }
 
-        DrawFormatString(740, 50, GetColor(0, 255, 0), "Press B to Start");
+        DrawFormatString(740, 50, GetColor(0, 255, 0), "Press   to Start");
+        DrawFormatString(735, 50, GetColor(255, 0, 0), "      B ");
         SetFontSize(125);
         DrawFormatString(350, 175, GetColor(0, 255, 0), "EndLess BEAMer");
         SetFontSize(40);

@@ -59,51 +59,10 @@ void Aim::Update(float deltaTime, VECTOR pPos)
 
 	XINPUT_STATE padInput;
 	GetJoypadXInputState(DX_INPUT_KEY_PAD1, &padInput);
-	if (padInput.ThumbRX < 0)
-	{
-		if (padInput.ThumbRX < -16383)
-		{
-			aimMark.x -= aimSpeed * deltaTime;
-		}
-		else
-		{
-			aimMark.x -= aimSpeed * deltaTime / 2;
-		}
-	}
-	if (padInput.ThumbRX > 0)
-	{
-		if (padInput.ThumbRX > 16383)
-		{
-			aimMark.x += aimSpeed * deltaTime;
-		}
-		else
-		{
-			aimMark.x += aimSpeed * deltaTime / 2;
-		}
-	}
-	if (padInput.ThumbRY < 0)
-	{
-		if (padInput.ThumbRY < -16383)
-		{
-			aimMark.y -= aimSpeed * deltaTime;
-		}
-		else
-		{
-			aimMark.y -= aimSpeed * deltaTime / 2;
-		}
-	}
-	if (padInput.ThumbRY > 0)
-	{
-		if (padInput.ThumbRY > 16383)
-		{
-			aimMark.y += aimSpeed * deltaTime;
-		}
-		else
-		{
-			aimMark.y += aimSpeed * deltaTime / 2;
-		}
-	}
+	
 
+	aimMark.x += aimSpeed * deltaTime * ((float)padInput.ThumbRX / 32768.0f);
+	aimMark.y += aimSpeed * deltaTime * ((float)padInput.ThumbRY / 32768.0f);
 
 	playerPos.z += playerSize / 2.0f;
 

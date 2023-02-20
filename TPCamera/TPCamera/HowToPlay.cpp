@@ -3,7 +3,7 @@
 HowToPlay::HowToPlay()
 {
 	pos = VGet(0, 0, 540);
-	upperRight = VGet(pos.x + 20.0f, pos.y + 15.0f, pos.z);
+	upperRight = VGet(pos.x + 20.0f, pos.y + 12.5f, pos.z);
 	lowerRight = VGet(pos.x + 20.0f, pos.y - 10.0f, pos.z);
 	upperLeft = VGet(pos.x - 15.0f, pos.y + 15.0f, pos.z);
 	lowerLeft = VGet(pos.x - 20.0f, pos.y - 15.0f, pos.z);
@@ -22,7 +22,7 @@ void HowToPlay::Update(float deltaTime)
 	if (leftFlag)
 	{
 		pos.z -= obsSpeed * deltaTime * 1.5f;
-		upperRight = VGet(pos.x + 20.0f, pos.y + 15.0f, pos.z);
+		upperRight = VGet(pos.x + 20.0f, pos.y + 12.5f, pos.z);
 		lowerRight = VGet(pos.x + 20.0f, pos.y - 10.0f, pos.z);
 		upperLeft = VGet(pos.x - 15.0f, pos.y + 15.0f, pos.z);
 		lowerLeft = VGet(pos.x - 20.0f, pos.y - 15.0f, pos.z);
@@ -43,7 +43,7 @@ void HowToPlay::Update(float deltaTime)
 		pos.z -= obsSpeed * deltaTime * 1.5f;
 		upperRight = VGet(pos.x + 15.0f, pos.y + 15.0f, pos.z);
 		lowerRight = VGet(pos.x + 20.0f, pos.y - 15.0f, pos.z);
-		upperLeft = VGet(pos.x - 20.0f, pos.y + 15.0f, pos.z);
+		upperLeft = VGet(pos.x - 20.0f, pos.y + 12.5f, pos.z);
 		lowerLeft = VGet(pos.x - 20.0f, pos.y - 10.0f, pos.z);
 		stick = VGet(pos.x + 5.0f, pos.y - 3.0f, pos.z);
 		if (pos.z < 200.0)
@@ -67,10 +67,10 @@ void HowToPlay::Draw()
 	SetFontSize(120);
 	if (leftFlag)
 	{
-		DrawString(400, 30, "MOVE L-STICK", GetColor(0, 255, 0));
+		DrawString(400, 300, "MOVE L-STICK", GetColor(0, 255, 0));
 	}
 	if (rightFlag)
 	{
-		DrawString(430, 30, "AIM R-STICK", GetColor(0, 255, 0));
+		DrawString(430, 300, "AIM R-STICK", GetColor(0, 255, 0));
 	}
 }
