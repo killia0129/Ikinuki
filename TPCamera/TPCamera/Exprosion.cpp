@@ -1,10 +1,13 @@
 #include<math.h>
 #include "Exprosion.h"
 
+const float MaxCount = 0.5f;
+const float CountDownSpeed = 1.2f;
+
 Exprosion::Exprosion(VECTOR _pos)
 {
     pos = _pos;
-    count = 0.50f;
+    count = MaxCount;
     end = false;
 }
 
@@ -14,7 +17,7 @@ Exprosion::~Exprosion()
 
 void Exprosion::Update(float deltaTime)
 {
-    count -= 1.2*deltaTime;
+    count -= CountDownSpeed*deltaTime;
     if (count < 0.0f)
     {
         end = true;
