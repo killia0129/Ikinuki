@@ -142,7 +142,6 @@
     <ClCompile Include="Aim.cpp" />
     <ClCompile Include="Beam.cpp" />
     <ClCompile Include="BossScene.cpp" />
-    <ClCompile Include="Camera.cpp" />
     <ClCompile Include="Exprosion.cpp" />
     <ClCompile Include="HowToPlay.cpp" />
     <ClCompile Include="InputMove.cpp" />
@@ -168,7 +167,6 @@
     <ClInclude Include="Beam.h" />
     <ClInclude Include="BossMemo.h" />
     <ClInclude Include="BossScene.h" />
-    <ClInclude Include="Camera.h" />
     <ClInclude Include="Exprosion.h" />
     <ClInclude Include="game.h" />
     <ClInclude Include="HowToPlay.h" />
