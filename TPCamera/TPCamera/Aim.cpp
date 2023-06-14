@@ -2,25 +2,48 @@
 #include "Aim.h"
 #include"game.h"
 
+const int DefaultMousePointX = 1920 / 2;
+const int DefaultMousePointY = 1080 / 2;
+const VECTOR NereAimSquarePos = VGet(0, 0, 80.f);
+const VECTOR FarAimSquarePos = VGet(0, 0, 140.f);
+const VECTOR PlayerDefaultPos = VGet(0, 0, 30.f);
+const VECTOR DefaultLineEndPos = VGet(0, 0, 530.f);
+const int AfterImageNum = 16;
+const VECTOR DefaultAimMarkPos = VGet(0, 0, 110.f);
+const unsigned int NormalColor = GetColor(0, 255, 0);
+const unsigned int LockedColor = GetColor(255, 0, 0);
+const int aimSpeed = 20.f;
+const int mouseBuffer = 0;
+const float MaxStickSize = 32768.f;
+const float PlayerHalfSize = playerSize / 2.f;
+const float OneThirdRad = DX_PI_F / 3.f;
+const int MaxAlfaBlend = 128;
+const int AlfaBlendDiff = 8;
+const float BeamR = 0.5f;
+const int BeamDivNum = 4;
+const unsigned int AfterImageBeamColor = GetColor(10, 10, 255);
+const unsigned int BeamColor = GetColor(42, 255, 255);
+const float AimMarkR = 1.f;
+const int AimMarkDivNum = 16;
+const float AimLineLength = 20.f;
+
 Aim::Aim()
 {
-	SetMousePoint(1920 / 2, 1080 / 2);
-	nearSquare = VGet(0, 0, 80);
-	farSquare = VGet(0, 0, 140);
-	playerPos = VGet(0, 0, 30);
-	lineLast = VGet(0, 0, 530);
-	for (int i = 0; i < 16; i++)
+	SetMousePoint(DefaultMousePointX, DefaultMousePointY);
+	nearSquare = NereAimSquarePos;
+	farSquare = FarAimSquarePos;
+	playerPos = PlayerDefaultPos;
+	lineLast = DefaultLineEndPos;
+	for (int i = 0; i < AfterImageNum; i++)
 	{
 		prevPlayerPos[i] = playerPos;
 		prevLineLast[i] = lineLast;
 	}
 	mousePointX = 0;
 	mousePointY = 0;
-	/*GetMousePoint(&mousePointX, &mousePointY);
-	GetMousePoint(&previousPointX, &previousPointY);*/
-	aimMark = VGet(0, 0, 110);
-	normalColor = GetColor(0, 255, 0);
-	lockedColor = GetColor(255, 0, 0);
+	aimMark = DefaultAimMarkPos;
+	normalColor = NormalColor;
+	lockedColor = LockedColor;
 	color = normalColor;
 }
 
@@ -30,7 +53,7 @@ Aim::~Aim()
 
 void Aim::Update(float deltaTime, VECTOR pPos)
 {
-	for (int i = 15; i >= 1; i--)
+	for (int i = AfterImageNum - 1; i >= 1; i--)
 	{
 		prevPlayerPos[i] = prevPlayerPos[i - 1];
 		prevLineLast[i] = prevLineLast[i - 1];
@@ -39,32 +62,31 @@ void Aim::Update(float deltaTime, VECTOR pPos)
 	prevLineLast[0] = lineLast;
 	playerPos = pPos;
 	GetMousePoint(&mousePointX, &mousePointY);
-	//SetMousePoint(1920 / 2, 1080 / 2);
-	if (mousePointX > 1920 / 2 + mouseBuffer)
+	if (mousePointX > DefaultMousePointX + mouseBuffer)
 	{
-		aimMark.x += aimSpeed * deltaTime;
+		aimMark.x += (mousePointX - DefaultMousePointX - mouseBuffer) * aimSpeed * deltaTime;
 	}
-	if (mousePointX < 1920 / 2 - mouseBuffer)
+	if (mousePointX < DefaultMousePointX - mouseBuffer)
 	{
-		aimMark.x -= aimSpeed * deltaTime;
+		aimMark.x += (mousePointX - DefaultMousePointX - mouseBuffer) * aimSpeed * deltaTime;
 	}
-	if (mousePointY > 1080 / 2 + mouseBuffer)
+	if (mousePointY > DefaultMousePointY + mouseBuffer)
 	{
-		aimMark.y -= aimSpeed * deltaTime;
+		aimMark.y -= (mousePointY - DefaultMousePointY - mouseBuffer) * aimSpeed * deltaTime;
 	}
-	if (mousePointY < 1080 / 2 - mouseBuffer)
+	if (mousePointY < DefaultMousePointY - mouseBuffer)
 	{
-		aimMark.y += aimSpeed * deltaTime;
+		aimMark.y -= (mousePointY - DefaultMousePointY - mouseBuffer) * aimSpeed * deltaTime;
 	}
 
 	XINPUT_STATE padInput;
 	GetJoypadXInputState(DX_INPUT_KEY_PAD1, &padInput);
 	
 
-	aimMark.x += aimSpeed * deltaTime * ((float)padInput.ThumbRX / 32768.0f);
-	aimMark.y += aimSpeed * deltaTime * ((float)padInput.ThumbRY / 32768.0f);
+	aimMark.x += aimSpeed * deltaTime * ((float)padInput.ThumbRX / MaxStickSize);
+	aimMark.y += aimSpeed * deltaTime * ((float)padInput.ThumbRY / MaxStickSize);
 
-	playerPos.z += playerSize / 2.0f;
+	playerPos.z +=PlayerHalfSize;
 
 	nearSquare.x = (aimMark.x - playerPos.x) * nearMarkRatio + playerPos.x;
 	nearSquare.y = (aimMark.y - playerPos.y) * nearMarkRatio + playerPos.y;
@@ -72,7 +94,7 @@ void Aim::Update(float deltaTime, VECTOR pPos)
 	farSquare.y = (aimMark.y - playerPos.y) * farMarkRatio + playerPos.y;
 	lineLast.x = (aimMark.x - playerPos.x) * lastMarkRatio + playerPos.x; 
 	lineLast.y = (aimMark.y - playerPos.y) * lastMarkRatio + playerPos.y;
-	SetMousePoint(1920 / 2, 1080 / 2);
+	SetMousePoint(DefaultMousePointX, DefaultMousePointY);
 }
 
 void Aim::Draw(bool lockFlag)
@@ -86,32 +108,32 @@ void Aim::Draw(bool lockFlag)
 		color = normalColor;
 	}
 	DrawTriangle3D(VGet(nearSquare.x, nearSquare.y + aimR, nearSquare.z),
-		VGet(nearSquare.x + aimR * sinf(2.0f * DX_PI_F / 3.0f), nearSquare.y + aimR * cosf(2.0f * DX_PI_F / 3.0f), nearSquare.z),
-		VGet(nearSquare.x + aimR * sinf(4.0f * DX_PI_F / 3.0f), nearSquare.y + aimR * cosf(4.0f * DX_PI_F / 3.0f), nearSquare.z),
+		VGet(nearSquare.x + aimR * sinf(2.0f * OneThirdRad), nearSquare.y + aimR * cosf(2.0f * OneThirdRad), nearSquare.z),
+		VGet(nearSquare.x + aimR * sinf(4.0f * OneThirdRad), nearSquare.y + aimR * cosf(4.0f * OneThirdRad), nearSquare.z),
 		color, false);
 	DrawTriangle3D(VGet(farSquare.x, farSquare.y + aimR, farSquare.z),
-		VGet(farSquare.x + aimR * sinf(2.0f * DX_PI_F / 3.0f), farSquare.y + aimR * cosf(2.0f * DX_PI_F / 3.0f), farSquare.z),
-		VGet(farSquare.x + aimR * sinf(4.0f * DX_PI_F / 3.0f), farSquare.y + aimR * cosf(4.0f * DX_PI_F / 3.0f), farSquare.z),
+		VGet(farSquare.x + aimR * sinf(2.0f * OneThirdRad), farSquare.y + aimR * cosf(2.0f * OneThirdRad), farSquare.z),
+		VGet(farSquare.x + aimR * sinf(4.0f * OneThirdRad), farSquare.y + aimR * cosf(4.0f * OneThirdRad), farSquare.z),
 		color, false);
 
-	for (int i = 0; i < 16; i++)
+	for (int i = 0; i < AfterImageNum; i++)
 	{
-		SetDrawBlendMode(DX_BLENDMODE_ALPHA, 128 - 8 * i);
-		DrawCapsule3D(prevPlayerPos[i], prevLineLast[i], 0.5f, 4, GetColor(10, 10, 255), GetColor(10, 10, 255), true);
+		SetDrawBlendMode(DX_BLENDMODE_ALPHA, MaxAlfaBlend - AlfaBlendDiff * i);
+		DrawCapsule3D(prevPlayerPos[i], prevLineLast[i], BeamR, BeamDivNum, AfterImageBeamColor, AfterImageBeamColor, true);
 	}
 
-	SetDrawBlendMode(DX_BLENDMODE_NOBLEND, 255);
+	SetDrawBlendMode(DX_BLENDMODE_NOBLEND, 0);
 
-	DrawCapsule3D(playerPos, lineLast, 0.5f, 4, GetColor(42, 255, 255), GetColor(42, 255, 255), true);
-	DrawCapsule3D(playerPos, lineLast, 0.45f, 1, lockedColor,lockedColor, false);
+	DrawCapsule3D(playerPos, lineLast, BeamR, BeamDivNum, BeamColor, BeamColor, true);
+	DrawCapsule3D(playerPos, lineLast, BeamR, 1, lockedColor, lockedColor, false);
 
 
-	DrawSphere3D(aimMark, 1.0f, 16, lockedColor, lockedColor, true);
-	DrawLine3D(aimMark, VGet(aimMark.x, -20.0f, aimMark.z), lockedColor);
-	DrawLine3D( VGet(-20.0f, -20.0f, aimMark.z), VGet(20.0f, -20.0f, aimMark.z),lockedColor);
-	DrawLine3D(VGet(-20.0f, aimMark.y, aimMark.z), VGet(20.0f, aimMark.y, aimMark.z), lockedColor);
-	DrawLine3D(VGet(-20.0f, -20.0f, aimMark.z), VGet(-20.0f, 20.0f, aimMark.z), lockedColor);
-	DrawLine3D(VGet(20.0f, -20.0f, aimMark.z), VGet(20.0f, 20.0f, aimMark.z), lockedColor);
+	DrawSphere3D(aimMark, AimMarkR, AimMarkDivNum, lockedColor, lockedColor, true);
+	DrawLine3D(aimMark, VGet(aimMark.x, -AimLineLength, aimMark.z), lockedColor);
+	DrawLine3D( VGet(-AimLineLength, -AimLineLength, aimMark.z), VGet(AimLineLength, -AimLineLength, aimMark.z),lockedColor);
+	DrawLine3D(VGet(-AimLineLength, aimMark.y, aimMark.z), VGet(AimLineLength, aimMark.y, aimMark.z), lockedColor);
+	DrawLine3D(VGet(-AimLineLength, -AimLineLength, aimMark.z), VGet(-AimLineLength, AimLineLength, aimMark.z), lockedColor);
+	DrawLine3D(VGet(AimLineLength, -AimLineLength, aimMark.z), VGet(AimLineLength, AimLineLength, aimMark.z), lockedColor);
 
 	//DrawFormatString(10, 30, GetColor(255, 255, 255),"X:%d,Y=%d",mousePointX,mousePointY);
 	//DrawFormatString(10, 50, GetColor(255, 255, 255), "pX:%f", playerPos.x);
