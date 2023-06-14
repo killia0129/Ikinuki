@@ -134,7 +134,4 @@ void Aim::Draw(bool lockFlag)
 	DrawLine3D(VGet(-AimLineLength, aimMark.y, aimMark.z), VGet(AimLineLength, aimMark.y, aimMark.z), lockedColor);
 	DrawLine3D(VGet(-AimLineLength, -AimLineLength, aimMark.z), VGet(-AimLineLength, AimLineLength, aimMark.z), lockedColor);
 	DrawLine3D(VGet(AimLineLength, -AimLineLength, aimMark.z), VGet(AimLineLength, AimLineLength, aimMark.z), lockedColor);
-
-	//DrawFormatString(10, 30, GetColor(255, 255, 255),"X:%d,Y=%d",mousePointX,mousePointY);
-	//DrawFormatString(10, 50, GetColor(255, 255, 255), "pX:%f", playerPos.x);
 }

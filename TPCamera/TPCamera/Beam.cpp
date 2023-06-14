@@ -1,16 +1,40 @@
 #include "Beam.h"
 #include"game.h"
 
+const float DefaultPosX = -15.f;
+const float BeamPosDiffX = 10.f;
+const float BeamPosY = 25.f;
+const float BeamPosZ = 25.f;
+const float BeamR = 5.f;
+const float BlinkFirstFase = 0.3f;
+const float BlinkSecondFase = 0.45f;
+const float OnFireTime = 2.f;
+const float EndTime = 4.f;
+const float BeamSpeed = 1000.f;
+const float BeamEndSpeed = 100.f;
+const int AnnounceLineDiffX = 480;
+const unsigned int AnnounceColor = GetColor(255, 0, 0);
+const int AnnounceLineThickness = 3;
+const int AnnounceFontSize = 100;
+const int ExclamationMarkDiffX = 10;
+const int ExclamationMarkHeight = 530;
+const int OnFireAlfaBlend = 144;
+const int CooldownAlfaBlend = 169;
+const int BeamDivNum = 8;
+const unsigned int BeamFrameColor = GetColor(42, 255, 255);
+const float LaneStart = -20.f;
+const float LaneLeftDiffX = 10.f;
+
 Beam::Beam(int laneNum)
 {
-    pos = VGet(-15.0f + 10.0 * (float)laneNum, 25.0f, 25.0f);
+    pos = VGet(DefaultPosX + BeamPosDiffX * (float)laneNum, BeamPosY, BeamPosZ);
     beamLast = pos;
     phase = READY;
     count = 0.0f;
     lane = laneNum;
     blinkController = 0.0f;
     blinkFlag = true;
-    beamR = 5.0f;
+    beamR = BeamR;
     hitFlag = false;
 }
 
@@ -27,11 +51,11 @@ void Beam::Update(float deltaTime)
     if (phase == ANNOUNCE)
     {
         blinkController += deltaTime;
-        if (blinkController <= 0.3f)
+        if (blinkController <= BlinkFirstFase)
         {
             blinkFlag = true;
         }
-        else if(blinkController<=0.45)
+        else if(blinkController<=BlinkSecondFase)
         {
             blinkFlag = false;
         }
@@ -39,22 +63,22 @@ void Beam::Update(float deltaTime)
         {
             blinkController = 0.0f;
         }
-        if (count >= 2.0f)
+        if (count >= OnFireTime)
         {
             phase = ONFIRE;
         }
     }
     if (phase == ONFIRE)
     {
-        beamLast = VGet(beamLast.x, beamLast.y - (1000.0f * deltaTime), beamLast.z);
-        if (count >= 4.0)
+        beamLast = VGet(beamLast.x, beamLast.y - (BeamSpeed * deltaTime), beamLast.z);
+        if (count >= EndTime)
         {
             phase = COOLDOWN;
         }
     }
     if (phase == COOLDOWN)
     {
-        beamR -= 100.0f * deltaTime;
+        beamR -= BeamEndSpeed * deltaTime;
         if (beamR <= 0.0f)
         {
             phase = READY;
@@ -72,25 +96,25 @@ void Beam::Draw()
         case ANNOUNCE:
             if (blinkFlag)
             {
-                DrawLine(lane * 480, 0,lane* 480, 1080, GetColor(255, 0, 0), 3);
-                DrawLine((lane+1) * 480, 0, (lane+1) * 480, 1080, GetColor(255, 0, 0), 3);
-                SetFontSize(100);
-                DrawString(10 + lane * 480, 530, "!!!!!!", GetColor(255, 0, 0));
+                DrawLine(lane * AnnounceLineDiffX, 0,lane* AnnounceLineDiffX, Windowheight, AnnounceColor, AnnounceLineThickness);
+                DrawLine((lane+1) * AnnounceLineDiffX, 0, (lane+1) * AnnounceLineDiffX, Windowheight, AnnounceColor, AnnounceLineThickness);
+                SetFontSize(AnnounceFontSize);
+                DrawString(ExclamationMarkDiffX + lane * AnnounceLineDiffX, ExclamationMarkHeight, "!!!!!!", AnnounceColor);
             }
             break;
 
         case ONFIRE:
-            SetDrawBlendMode(DX_BLENDMODE_ALPHA, 144);
-            DrawCapsule3D(pos, beamLast, beamR, 8, GetColor(255, 0, 0), GetColor(255, 0, 0), true);
-            DrawCapsule3D(pos, beamLast, beamR, 4, GetColor(42, 255, 255), GetColor(42, 255, 255), false);
-            SetDrawBlendMode(DX_BLENDMODE_NOBLEND, 255);
+            SetDrawBlendMode(DX_BLENDMODE_ALPHA, OnFireAlfaBlend);
+            DrawCapsule3D(pos, beamLast, beamR, BeamDivNum, AnnounceColor, AnnounceColor, true);
+            DrawCapsule3D(pos, beamLast, beamR, BeamDivNum, BeamFrameColor, BeamFrameColor, false);
+            SetDrawBlendMode(DX_BLENDMODE_NOBLEND, 0);
             break;
 
         case COOLDOWN:
-            SetDrawBlendMode(DX_BLENDMODE_ALPHA, 169);
-            DrawCapsule3D(pos, beamLast, beamR, 8, GetColor(255, 0, 0), GetColor(255, 0, 0), true);
-            DrawCapsule3D(pos, beamLast, beamR, 4, GetColor(42, 255, 255), GetColor(42, 255, 255), false);
-            SetDrawBlendMode(DX_BLENDMODE_NOBLEND, 255);
+            SetDrawBlendMode(DX_BLENDMODE_ALPHA, CooldownAlfaBlend);
+            DrawCapsule3D(pos, beamLast, beamR, BeamDivNum, AnnounceColor, AnnounceColor, true);
+            DrawCapsule3D(pos, beamLast, beamR, BeamDivNum, BeamFrameColor, BeamFrameColor, false);
+            SetDrawBlendMode(DX_BLENDMODE_NOBLEND, 0);
             break;
 
         default:
@@ -105,7 +129,7 @@ void Beam::Start()
     count = 0.0f;
     blinkController = 0.0f;
     beamLast = pos;
-    beamR = 5.0f;
+    beamR = BeamR;
     hitFlag = false;
 }
 
@@ -115,7 +139,7 @@ bool Beam::HitCheck(VECTOR pPos)
     {
         if (phase == ONFIRE)
         {
-            if (pPos.x >= -20.0f + (10.0f * lane) - playerR && pPos.x <= -20.0f + (10.0f * (lane + 1)) + playerR)
+            if (pPos.x >= LaneStart + (LaneLeftDiffX * lane) - playerR && pPos.x <= LaneStart + (LaneLeftDiffX * (lane + 1)) + playerR)
             {
                 hitFlag = true;
                 return true;
