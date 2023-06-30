@@ -1,6 +1,8 @@
 #include "Player.h"
 #include"game.h"
 
+const float KeybordSpeedAdjust = 0.01f;
+
 Player::Player()
 {
 	pos = VGet(0, 0, 30);
@@ -31,19 +33,19 @@ void Player::Update(float deltaTime)
 	switch (keyInput)
 	{
 	case DIR::AHEAD:
-		pos.y += playerSpeed;
+		pos.y += playerSpeed * KeybordSpeedAdjust;
 		break;
 
 	case DIR::BACK:
-		pos.y -= playerSpeed;
+		pos.y -= playerSpeed * KeybordSpeedAdjust;
 		break;
 
 	case DIR::LEFT:
-		pos.x -= playerSpeed;
+		pos.x -= playerSpeed * KeybordSpeedAdjust;
 		break;
 
 	case DIR::RIGHT:
-		pos.x += playerSpeed;
+		pos.x += playerSpeed * KeybordSpeedAdjust;
 		break;
 
 	default:
