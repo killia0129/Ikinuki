@@ -1,5 +1,6 @@
 #pragma once
 #include<vector>
+#include<algorithm>
 #include"Stage.h"
 #include"Meteor.h"
 #include"Needle.h"

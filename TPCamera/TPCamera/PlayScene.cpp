@@ -1,5 +1,6 @@
 #include "PlayScene.h"
 
+
 PlayScene::PlayScene()
 {
     for (int i = 0; i < 4; i++)
@@ -232,7 +233,7 @@ float PlayScene::ALL()
             dis = sqrtf(dis);
             if (fase == NORMAL)
             {
-                if (dis < 4.0f && ptr->posGetter().z>10.0f)
+                if (dis < 5.0f && ptr->posGetter().z>10.0f)
                 {
                     ptr->GivenDmg(deltaTime);
                     Particle* newEffect = new Particle(ptr->posGetter());
