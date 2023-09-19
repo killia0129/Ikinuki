@@ -20,7 +20,7 @@ void Particle::Update(float deltaTime)
 	yPower -= g * deltaTime;
 	pos.x += xPower;
 	pos.y += yPower;
-	pos.z -= obsSpeed*deltaTime;
+	pos.z -= obsSpeed*deltaTime*10.f;
 	count += deltaTime;
 	if (count > particleSec)
 	{
