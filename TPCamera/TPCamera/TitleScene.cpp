@@ -158,7 +158,7 @@ float TitleScene::ALL()
 
         //DrawFormatString(10, 10, GetColor(255, 255, 255), "%3.2f", 1.0f / deltaTime);
 
-        if (CheckHitKey(KEY_INPUT_ESCAPE))
+        if (CheckHitKey(KEY_INPUT_ESCAPE)||padInput.Buttons[XINPUT_BUTTON_START] == 1)
         {
             return -2.0f;
         }

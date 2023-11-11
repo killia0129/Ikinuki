@@ -126,7 +126,7 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine
 				SetFontSize(40);
 			}
 
-			if (CheckHitKey(KEY_INPUT_ESCAPE))
+			if (CheckHitKey(KEY_INPUT_ESCAPE)|| padInput.Buttons[XINPUT_BUTTON_START] == 1)
 			{
 				loop = false;
 				break;

@@ -47,6 +47,9 @@ PlayScene::~PlayScene()
 
 float PlayScene::ALL()
 {
+    XINPUT_STATE padInput;
+
+
     while (1)
     {
         SetDrawScreen(colorScreen);
@@ -67,6 +70,9 @@ float PlayScene::ALL()
 
         SetCameraNearFar(1.0f, 499.0f);
         SetCameraPositionAndTarget_UpVecY(VGet(0, 0, 0), VGet(0.0f, 0.0f, 250.0f));
+
+        GetJoypadXInputState(DX_INPUT_KEY_PAD1, &padInput);
+
 
         srand(seed);
 
@@ -397,7 +403,7 @@ float PlayScene::ALL()
 
 
 
-        if (CheckHitKey(KEY_INPUT_ESCAPE))
+        if (CheckHitKey(KEY_INPUT_ESCAPE)||padInput.Buttons[XINPUT_BUTTON_START]==1)
         {
             return -1.0f;
         }
@@ -486,7 +492,7 @@ float PlayScene::ALL()
             return count;
         }
 
-        if (time < 0)
+        if (time < 0|| padInput.Buttons[XINPUT_BUTTON_BACK] == 1)
         {
             float num = 0.0f;
             float _nowCount;
